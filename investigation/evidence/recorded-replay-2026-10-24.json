@@ -1,0 +1,1225 @@
+{
+  "timestamp": "2026-10-24T16:39:11.288451+00:00",
+  "results": [
+    {
+      "index": 0,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 3,
+        "query": null,
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "ff00092e91a041269d8d9db3cbdefba0",
+        "content-length": "1319",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":1,\"crew_name\":\"marta.kowalski@meridianstage.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":3,\"rate\":\"31.00\"},{\"crew_id\":5,\"crew_name\":\"deshawn.avery@meridianstage.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"24.50\"},{\"crew_id\":9,\"crew_name\":\"priya.raman@meridianstage.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"audio 2, has van\",\"org\":3,\"rate\":\"26.75\"},{\"crew_id\":13,\"crew_name\":\"owen.fitzgerald@meridianstage.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"22.00\"},{\"crew_id\":17,\"crew_name\":\"lucia.marchetti@meridianstage.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":3,\"rate\":\"28.25\"},{\"crew_id\":21,\"crew_name\":\"sam.okafor@meridianstage.example\",\"display_name\":\"S. Okafor\",\"is_lead\":\"N\",\"notes\":\"new hire, shadowing only until cleared\",\"org\":3,\"rate\":\"15.55\"},{\"crew_id\":25,\"crew_name\":\"renee.delacroix@meridianstage.example\",\"display_name\":\"R. Delacroix\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"25.00\"},{\"crew_id\":29,\"crew_name\":\"toby.anderson@meridianstage.example\",\"display_name\":\"T. Anderson\",\"is_lead\":\"N\",\"notes\":\"no fly rail\",\"org\":3,\"rate\":\"19.80\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 1,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 3,
+        "query": {
+          "page": 1,
+          "per_page": 5
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "e6132c08ebb94c8ea64070391134c3a8",
+        "content-length": "846",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":1,\"crew_name\":\"marta.kowalski@meridianstage.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":3,\"rate\":\"31.00\"},{\"crew_id\":5,\"crew_name\":\"deshawn.avery@meridianstage.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"24.50\"},{\"crew_id\":9,\"crew_name\":\"priya.raman@meridianstage.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"audio 2, has van\",\"org\":3,\"rate\":\"26.75\"},{\"crew_id\":13,\"crew_name\":\"owen.fitzgerald@meridianstage.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"22.00\"},{\"crew_id\":17,\"crew_name\":\"lucia.marchetti@meridianstage.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":3,\"rate\":\"28.25\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 2,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 3,
+        "query": {
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "581f915bef8245169c2ba185c41f8965",
+        "content-length": "1319",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":1,\"crew_name\":\"marta.kowalski@meridianstage.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":3,\"rate\":\"31.00\"},{\"crew_id\":5,\"crew_name\":\"deshawn.avery@meridianstage.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"24.50\"},{\"crew_id\":9,\"crew_name\":\"priya.raman@meridianstage.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"audio 2, has van\",\"org\":3,\"rate\":\"26.75\"},{\"crew_id\":13,\"crew_name\":\"owen.fitzgerald@meridianstage.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"22.00\"},{\"crew_id\":17,\"crew_name\":\"lucia.marchetti@meridianstage.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":3,\"rate\":\"28.25\"},{\"crew_id\":21,\"crew_name\":\"sam.okafor@meridianstage.example\",\"display_name\":\"S. Okafor\",\"is_lead\":\"N\",\"notes\":\"new hire, shadowing only until cleared\",\"org\":3,\"rate\":\"15.55\"},{\"crew_id\":25,\"crew_name\":\"renee.delacroix@meridianstage.example\",\"display_name\":\"R. Delacroix\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":3,\"rate\":\"25.00\"},{\"crew_id\":29,\"crew_name\":\"toby.anderson@meridianstage.example\",\"display_name\":\"T. Anderson\",\"is_lead\":\"N\",\"notes\":\"no fly rail\",\"org\":3,\"rate\":\"19.80\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 3,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/show",
+        "org": 3,
+        "query": {
+          "crew_id": 1
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "c67b18fc63974d0badab2e582e7e94d8",
+        "content-length": "276",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew_id\":1,\"crew_name\":\"marta.kowalski@meridianstage.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":3,\"prefs\":\"{\\\"sms\\\": \\\"Y\\\", \\\"ui_rows\\\": 25, \\\"digest\\\": \\\"Y\\\"}\",\"rate\":\"31.00\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 4,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 3,
+        "query": {
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "0eececfbb74e4060aa70401f1a78304c",
+        "content-length": "4223",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"10/12/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":3,\"shift_id\":11,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"10/12/2026 08:00\",\"title\":\"Load-in \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"10/12/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":3,\"shift_id\":1,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"10/12/2026 08:00\",\"title\":\"Load-in \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"10/19/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":12,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"10/19/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"10/19/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":2,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"10/19/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":13,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":3,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":3,\"shift_id\":14,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"10/31/2026 22:00\",\"title\":\"Strike \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":3,\"shift_id\":4,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"10/31/2026 22:00\",\"title\":\"Strike \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":3,\"shift_id\":15,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":3,\"shift_id\":5,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":16,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":6,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":3,\"shift_id\":17,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":3,\"shift_id\":7,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":18,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":8,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":19,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":9,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"12/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":3,\"shift_id\":20,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"11/30/2026 22:00\",\"title\":\"Strike \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"12/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":3,\"shift_id\":10,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"11/30/2026 22:00\",\"title\":\"Strike \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"}],\"total\":20},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 5,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 3,
+        "query": {
+          "start": "11/01/2026",
+          "end": "11/16/2026",
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "60ad0063405b46a3a43d660ed1f63296",
+        "content-length": "2169",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":3,\"shift_id\":15,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":3,\"shift_id\":5,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":16,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":6,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":3,\"shift_id\":17,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":3,\"shift_id\":7,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":18,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":8,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":19,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":9,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"}],\"total\":10},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 6,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 3,
+        "query": {
+          "start": "11/12/2026",
+          "end": "11/12/2026"
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "3d3c0793f53446a3986298dfa1064ebc",
+        "content-length": "496",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":18,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Meridian Hall\",\"venue\":\"Meridian Hall\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":3,\"shift_id\":8,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"}],\"total\":2},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 7,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/show",
+        "org": 3,
+        "query": {
+          "shift_id": 3
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "708d365beef64907a793867ebe5ef6cc",
+        "content-length": "806",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignments\":[{\"assignment_id\":7,\"crew_id\":1,\"crew_name\":\"marta.kowalski@meridianstage.example\",\"pay_estimate\":\"186.00\",\"shift_id\":3,\"shift_title\":\"Evening show call \\u2014 The Aldwych\",\"status\":\"A\"},{\"assignment_id\":8,\"crew_id\":5,\"crew_name\":\"deshawn.avery@meridianstage.example\",\"pay_estimate\":\"\",\"shift_id\":3,\"shift_title\":\"Evening show call \\u2014 The Aldwych\",\"status\":\"E\"},{\"assignment_id\":9,\"crew_id\":9,\"crew_name\":\"priya.raman@meridianstage.example\",\"pay_estimate\":\"\",\"shift_id\":3,\"shift_title\":\"Evening show call \\u2014 The Aldwych\",\"status\":\"E\"}],\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":3,\"shift_id\":3,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 The Aldwych\",\"venue\":\"The Aldwych\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 8,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/roster_rows",
+        "org": 3,
+        "query": {
+          "shift_id": 1
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "text/html; charset=utf-8",
+        "x-served-by": "callboard",
+        "x-trace-id": "84b99cd2080444df80498f60f8ea0487",
+        "content-length": "264",
+        "Connection": "close"
+      },
+      "body": "<tr class=\"cb-row\" data-aid=\"1\"><td>M. Kowalski</td><td>Accepted</td><td>$310.00</td></tr>\n<tr class=\"cb-row\" data-aid=\"2\"><td>D. Avery</td><td>Expired</td><td>&mdash;</td></tr>\n<tr class=\"cb-row\" data-aid=\"3\"><td>P. Raman</td><td>Expired</td><td>&mdash;</td></tr>"
+    },
+    {
+      "index": 9,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/message/list",
+        "org": 3,
+        "query": {
+          "crew_id": 5
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "633e7a8d5a3d4465817aeb7ca1a444e3",
+        "content-length": "3969",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"messages\":[{\"body\":\"You have been offered a call: Strike \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":39,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Strike \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":37,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Evening show call \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":35,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Matinee changeover \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Strike \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":19,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Strike \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":17,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Evening show call \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":15,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Matinee changeover \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Full day festival \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":33,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Full day festival \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":31,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Load-in \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":29,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Strike \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":27,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Strike \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":25,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":23,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Matinee changeover \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Load-in \\u2014 Meridian Hall\",\"kind\":\"CALLOUT\",\"message_id\":21,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 Meridian Hall\"},{\"body\":\"You have been offered a call: Full day festival \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":13,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Full day festival \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":11,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Load-in \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":9,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Strike \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":7,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Strike \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":5,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":3,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Matinee changeover \\u2014 The Aldwych\"},{\"body\":\"You have been offered a call: Load-in \\u2014 The Aldwych\",\"kind\":\"CALLOUT\",\"message_id\":1,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 The Aldwych\"}],\"page\":1,\"total\":20},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 16,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 7,
+        "query": null,
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "7ed8bf14c0364e28a1ea08354341d88c",
+        "content-length": "1315",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":2,\"crew_name\":\"marta.kowalski@harborlight.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"N\",\"notes\":\"head rigger, day calls preferred\",\"org\":7,\"rate\":\"32.17\"},{\"crew_id\":6,\"crew_name\":\"deshawn.avery@harborlight.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"24.50\"},{\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"PROBE: cleared for fly rail\",\"org\":7,\"rate\":\"26.75\"},{\"crew_id\":14,\"crew_name\":\"owen.fitzgerald@harborlight.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"22.00\"},{\"crew_id\":18,\"crew_name\":\"lucia.marchetti@harborlight.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":7,\"rate\":\"28.25\"},{\"crew_id\":22,\"crew_name\":\"sam.okafor@harborlight.example\",\"display_name\":\"S. Okafor\",\"is_lead\":\"N\",\"notes\":\"new hire, shadowing only until cleared\",\"org\":7,\"rate\":\"15.55\"},{\"crew_id\":26,\"crew_name\":\"renee.delacroix@harborlight.example\",\"display_name\":\"R. Delacroix\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"25.00\"},{\"crew_id\":30,\"crew_name\":\"toby.anderson@harborlight.example\",\"display_name\":\"T. Anderson\",\"is_lead\":\"N\",\"notes\":\"no fly rail\",\"org\":7,\"rate\":\"19.80\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 17,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 7,
+        "query": {
+          "page": 1,
+          "per_page": 5
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "f7cb1f30e3d247fbbe762d43462a98f5",
+        "content-length": "848",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":2,\"crew_name\":\"marta.kowalski@harborlight.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"N\",\"notes\":\"head rigger, day calls preferred\",\"org\":7,\"rate\":\"32.17\"},{\"crew_id\":6,\"crew_name\":\"deshawn.avery@harborlight.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"24.50\"},{\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"PROBE: cleared for fly rail\",\"org\":7,\"rate\":\"26.75\"},{\"crew_id\":14,\"crew_name\":\"owen.fitzgerald@harborlight.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"22.00\"},{\"crew_id\":18,\"crew_name\":\"lucia.marchetti@harborlight.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":7,\"rate\":\"28.25\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 18,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 7,
+        "query": {
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "ac4a663e2159490c9a7fcc4854663d0a",
+        "content-length": "1315",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":2,\"crew_name\":\"marta.kowalski@harborlight.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"N\",\"notes\":\"head rigger, day calls preferred\",\"org\":7,\"rate\":\"32.17\"},{\"crew_id\":6,\"crew_name\":\"deshawn.avery@harborlight.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"24.50\"},{\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"PROBE: cleared for fly rail\",\"org\":7,\"rate\":\"26.75\"},{\"crew_id\":14,\"crew_name\":\"owen.fitzgerald@harborlight.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"22.00\"},{\"crew_id\":18,\"crew_name\":\"lucia.marchetti@harborlight.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":7,\"rate\":\"28.25\"},{\"crew_id\":22,\"crew_name\":\"sam.okafor@harborlight.example\",\"display_name\":\"S. Okafor\",\"is_lead\":\"N\",\"notes\":\"new hire, shadowing only until cleared\",\"org\":7,\"rate\":\"15.55\"},{\"crew_id\":26,\"crew_name\":\"renee.delacroix@harborlight.example\",\"display_name\":\"R. Delacroix\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":7,\"rate\":\"25.00\"},{\"crew_id\":30,\"crew_name\":\"toby.anderson@harborlight.example\",\"display_name\":\"T. Anderson\",\"is_lead\":\"N\",\"notes\":\"no fly rail\",\"org\":7,\"rate\":\"19.80\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 19,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/show",
+        "org": 7,
+        "query": {
+          "crew_id": 2
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "ca488223185a4071ad8b30fe59ba7365",
+        "content-length": "274",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew_id\":2,\"crew_name\":\"marta.kowalski@harborlight.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"N\",\"notes\":\"head rigger, day calls preferred\",\"org\":7,\"prefs\":\"{\\\"sms\\\": \\\"Y\\\", \\\"ui_rows\\\": 25, \\\"digest\\\": \\\"Y\\\"}\",\"rate\":\"32.17\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 20,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 7,
+        "query": {
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "8aa301a358024d0c8890399cad357daa",
+        "content-length": "4608",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"10/12/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":7,\"shift_id\":31,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"10/12/2026 08:00\",\"title\":\"Load-in \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"10/12/2026 18:00\",\"lead\":\"D. Avery\",\"open_slots\":2,\"org_id\":7,\"shift_id\":21,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"10/12/2026 08:00\",\"title\":\"Load-in \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"10/19/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":7,\"shift_id\":32,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"10/19/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"10/19/2026 18:00\",\"lead\":\"D. Avery\",\"open_slots\":0,\"org_id\":7,\"shift_id\":22,\"slots\":2,\"staffing_status\":\"FULL\",\"starts\":\"10/19/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":33,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":23,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":7,\"shift_id\":34,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"10/31/2026 22:00\",\"title\":\"Strike \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":7,\"shift_id\":24,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"10/31/2026 22:00\",\"title\":\"Strike \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":7,\"shift_id\":35,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":7,\"shift_id\":25,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":36,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":26,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":7,\"shift_id\":37,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":7,\"shift_id\":27,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":7,\"shift_id\":38,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"D. Avery\",\"open_slots\":0,\"org_id\":7,\"shift_id\":28,\"slots\":2,\"staffing_status\":\"FULL\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":39,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":29,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"12/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":7,\"shift_id\":40,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"11/30/2026 22:00\",\"title\":\"Strike \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"12/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":7,\"shift_id\":30,\"slots\":6,\"staffing_status\":\"CXL\",\"starts\":\"11/30/2026 22:00\",\"title\":\"Strike \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"12/04/2026 15:30\",\"lead\":\"O. Fitzgerald\",\"open_slots\":1,\"org_id\":7,\"shift_id\":61,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"12/04/2026 07:00\",\"title\":\"PROBE daylight saving\",\"venue\":\"Harbor Light Amp\"}],\"total\":21},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 21,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 7,
+        "query": {
+          "start": "11/01/2026",
+          "end": "11/16/2026",
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "bb44dd99826c4ed982c0990f241b9b15",
+        "content-length": "2252",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":7,\"shift_id\":35,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":7,\"shift_id\":25,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":36,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":26,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":7,\"shift_id\":37,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":7,\"shift_id\":27,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":7,\"shift_id\":38,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"D. Avery\",\"open_slots\":0,\"org_id\":7,\"shift_id\":28,\"slots\":2,\"staffing_status\":\"FULL\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":39,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":29,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"}],\"total\":10},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 22,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 7,
+        "query": {
+          "start": "11/12/2026",
+          "end": "11/12/2026"
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "63f07222c6a049568b5f8b490a5f6438",
+        "content-length": "519",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":7,\"shift_id\":38,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 The Beacon Room\",\"venue\":\"The Beacon Room\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"D. Avery\",\"open_slots\":0,\"org_id\":7,\"shift_id\":28,\"slots\":2,\"staffing_status\":\"FULL\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"}],\"total\":2},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 23,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/show",
+        "org": 7,
+        "query": {
+          "shift_id": 23
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "b9459727b76a4147b456b9bcdb1793cd",
+        "content-length": "833",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignments\":[{\"assignment_id\":67,\"crew_id\":2,\"crew_name\":\"marta.kowalski@harborlight.example\",\"pay_estimate\":\"186.00\",\"shift_id\":23,\"shift_title\":\"Evening show call \\u2014 Harbor Light Amp\",\"status\":\"A\"},{\"assignment_id\":68,\"crew_id\":6,\"crew_name\":\"deshawn.avery@harborlight.example\",\"pay_estimate\":\"\",\"shift_id\":23,\"shift_title\":\"Evening show call \\u2014 Harbor Light Amp\",\"status\":\"E\"},{\"assignment_id\":69,\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"pay_estimate\":\"\",\"shift_id\":23,\"shift_title\":\"Evening show call \\u2014 Harbor Light Amp\",\"status\":\"E\"}],\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":7,\"shift_id\":23,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 24,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/roster_rows",
+        "org": 7,
+        "query": {
+          "shift_id": 21
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "text/html; charset=utf-8",
+        "x-served-by": "callboard",
+        "x-trace-id": "3c1d224e69704659bea9fe9bf3218925",
+        "content-length": "268",
+        "Connection": "close"
+      },
+      "body": "<tr class=\"cb-row\" data-aid=\"61\"><td>M. Kowalski</td><td>Accepted</td><td>$310.00</td></tr>\n<tr class=\"cb-row\" data-aid=\"62\"><td>D. Avery</td><td>Accepted</td><td>$245.00</td></tr>\n<tr class=\"cb-row\" data-aid=\"63\"><td>P. Raman</td><td>Expired</td><td>&mdash;</td></tr>"
+    },
+    {
+      "index": 25,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/message/list",
+        "org": 7,
+        "query": {
+          "crew_id": 6
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "12973e5201684397aeda484084f18479",
+        "content-length": "4655",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"messages\":[{\"body\":\"Shift cancelled: Strike \\u2014 Harbor Light Amp\",\"kind\":\"CXL\",\"message_id\":126,\"read\":\"N\",\"sent\":\"10/24/2026 11:17\",\"shift_title\":\"Strike \\u2014 Harbor Light Amp\"},{\"body\":\"Confirmed: Matinee changeover \\u2014 Harbor Light Amp\",\"kind\":\"CONFIRM\",\"message_id\":123,\"read\":\"N\",\"sent\":\"10/24/2026 11:17\",\"shift_title\":\"Matinee changeover \\u2014 Harbor Light Amp\"},{\"body\":\"Confirmed: Load-in \\u2014 Harbor Light Amp\",\"kind\":\"CONFIRM\",\"message_id\":122,\"read\":\"N\",\"sent\":\"10/24/2026 11:17\",\"shift_title\":\"Load-in \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Strike \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":79,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Strike \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":77,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Evening show call \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":75,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Matinee changeover \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Strike \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":59,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Strike \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":57,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Evening show call \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":55,\"read\":\"Y\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Matinee changeover \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Full day festival \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":73,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Full day festival \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":71,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Load-in \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":69,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Strike \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":67,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Strike \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":65,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":63,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Matinee changeover \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Load-in \\u2014 The Beacon Room\",\"kind\":\"CALLOUT\",\"message_id\":61,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 The Beacon Room\"},{\"body\":\"You have been offered a call: Full day festival \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":53,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Full day festival \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":51,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Load-in \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":49,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Strike \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":47,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Strike \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":45,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":43,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Matinee changeover \\u2014 Harbor Light Amp\"},{\"body\":\"You have been offered a call: Load-in \\u2014 Harbor Light Amp\",\"kind\":\"CALLOUT\",\"message_id\":41,\"read\":\"Y\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 Harbor Light Amp\"}],\"page\":1,\"total\":23},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 32,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 12,
+        "query": null,
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "11e9fcee26464b0f884b19a08c9ea4f0",
+        "content-length": "1296",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":3,\"crew_name\":\"marta.kowalski@ovationvg.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":12,\"rate\":\"31.00\"},{\"crew_id\":7,\"crew_name\":\"deshawn.avery@ovationvg.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"24.50\"},{\"crew_id\":11,\"crew_name\":\"priya.raman@ovationvg.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"audio 2, has van\",\"org\":12,\"rate\":\"26.75\"},{\"crew_id\":15,\"crew_name\":\"owen.fitzgerald@ovationvg.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"22.00\"},{\"crew_id\":19,\"crew_name\":\"lucia.marchetti@ovationvg.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":12,\"rate\":\"28.25\"},{\"crew_id\":23,\"crew_name\":\"sam.okafor@ovationvg.example\",\"display_name\":\"S. Okafor\",\"is_lead\":\"N\",\"notes\":\"new hire, shadowing only until cleared\",\"org\":12,\"rate\":\"15.55\"},{\"crew_id\":27,\"crew_name\":\"renee.delacroix@ovationvg.example\",\"display_name\":\"R. Delacroix\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"25.00\"},{\"crew_id\":31,\"crew_name\":\"toby.anderson@ovationvg.example\",\"display_name\":\"T. Anderson\",\"is_lead\":\"N\",\"notes\":\"no fly rail\",\"org\":12,\"rate\":\"19.80\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 33,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 12,
+        "query": {
+          "page": 1,
+          "per_page": 5
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "b558d3aae77e4e019c6ca0ac1afa1258",
+        "content-length": "832",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":3,\"crew_name\":\"marta.kowalski@ovationvg.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":12,\"rate\":\"31.00\"},{\"crew_id\":7,\"crew_name\":\"deshawn.avery@ovationvg.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"24.50\"},{\"crew_id\":11,\"crew_name\":\"priya.raman@ovationvg.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"audio 2, has van\",\"org\":12,\"rate\":\"26.75\"},{\"crew_id\":15,\"crew_name\":\"owen.fitzgerald@ovationvg.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"22.00\"},{\"crew_id\":19,\"crew_name\":\"lucia.marchetti@ovationvg.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":12,\"rate\":\"28.25\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 34,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/list",
+        "org": 12,
+        "query": {
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "2dd3ac64241c42c4800130694e42ffde",
+        "content-length": "1296",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew\":[{\"crew_id\":3,\"crew_name\":\"marta.kowalski@ovationvg.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":12,\"rate\":\"31.00\"},{\"crew_id\":7,\"crew_name\":\"deshawn.avery@ovationvg.example\",\"display_name\":\"D. Avery\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"24.50\"},{\"crew_id\":11,\"crew_name\":\"priya.raman@ovationvg.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"audio 2, has van\",\"org\":12,\"rate\":\"26.75\"},{\"crew_id\":15,\"crew_name\":\"owen.fitzgerald@ovationvg.example\",\"display_name\":\"O. Fitzgerald\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"22.00\"},{\"crew_id\":19,\"crew_name\":\"lucia.marchetti@ovationvg.example\",\"display_name\":\"L. Marchetti\",\"is_lead\":\"Y\",\"notes\":\"production electrician\",\"org\":12,\"rate\":\"28.25\"},{\"crew_id\":23,\"crew_name\":\"sam.okafor@ovationvg.example\",\"display_name\":\"S. Okafor\",\"is_lead\":\"N\",\"notes\":\"new hire, shadowing only until cleared\",\"org\":12,\"rate\":\"15.55\"},{\"crew_id\":27,\"crew_name\":\"renee.delacroix@ovationvg.example\",\"display_name\":\"R. Delacroix\",\"is_lead\":\"N\",\"notes\":\"\",\"org\":12,\"rate\":\"25.00\"},{\"crew_id\":31,\"crew_name\":\"toby.anderson@ovationvg.example\",\"display_name\":\"T. Anderson\",\"is_lead\":\"N\",\"notes\":\"no fly rail\",\"org\":12,\"rate\":\"19.80\"}],\"page\":1,\"total\":8},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 35,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/show",
+        "org": 12,
+        "query": {
+          "crew_id": 3
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "b043818bcf214e5f897c792fe5878728",
+        "content-length": "273",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew_id\":3,\"crew_name\":\"marta.kowalski@ovationvg.example\",\"display_name\":\"M. Kowalski\",\"is_lead\":\"Y\",\"notes\":\"head rigger, day calls preferred\",\"org\":12,\"prefs\":\"{\\\"sms\\\": \\\"Y\\\", \\\"ui_rows\\\": 25, \\\"digest\\\": \\\"Y\\\"}\",\"rate\":\"31.00\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 36,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 12,
+        "query": {
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "126ec318352c4798bbbaa8282cb21e6f",
+        "content-length": "2202",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"10/12/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":12,\"shift_id\":41,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"10/12/2026 08:00\",\"title\":\"Load-in \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"10/19/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":12,\"shift_id\":42,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"10/19/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"10/26/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":12,\"shift_id\":43,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"10/26/2026 17:00\",\"title\":\"Evening show call \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":12,\"shift_id\":44,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"10/31/2026 22:00\",\"title\":\"Strike \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":12,\"shift_id\":45,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":12,\"shift_id\":46,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":12,\"shift_id\":47,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":12,\"shift_id\":48,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":12,\"shift_id\":49,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"12/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":12,\"shift_id\":50,\"slots\":6,\"staffing_status\":\"OPEN\",\"starts\":\"11/30/2026 22:00\",\"title\":\"Strike \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"}],\"total\":10},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 37,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 12,
+        "query": {
+          "start": "11/01/2026",
+          "end": "11/16/2026",
+          "per_page": 0
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "5340ca4bdb324c288a382723ad734d12",
+        "content-length": "1147",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":12,\"shift_id\":45,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/05/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":12,\"shift_id\":46,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/05/2026 17:00\",\"title\":\"Evening show call \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/08/2026 21:00\",\"lead\":\"\",\"open_slots\":7,\"org_id\":12,\"shift_id\":47,\"slots\":8,\"staffing_status\":\"OPEN\",\"starts\":\"11/08/2026 09:00\",\"title\":\"Full day festival \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":12,\"shift_id\":48,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},{\"ends\":\"11/16/2026 23:00\",\"lead\":\"\",\"open_slots\":4,\"org_id\":12,\"shift_id\":49,\"slots\":5,\"staffing_status\":\"OPEN\",\"starts\":\"11/16/2026 17:00\",\"title\":\"Evening show call \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"}],\"total\":5},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 38,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/list",
+        "org": 12,
+        "query": {
+          "start": "11/12/2026",
+          "end": "11/12/2026"
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "b466bbdbe4d34c2a80d4a9a35f17c0ed",
+        "content-length": "289",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"page\":1,\"shifts\":[{\"ends\":\"11/12/2026 18:00\",\"lead\":\"\",\"open_slots\":1,\"org_id\":12,\"shift_id\":48,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"11/12/2026 13:00\",\"title\":\"Matinee changeover \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"}],\"total\":1},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 39,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/show",
+        "org": 12,
+        "query": {
+          "shift_id": 45
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "1b770a797c5d47a498c0edaff759ddcb",
+        "content-length": "781",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignments\":[{\"assignment_id\":133,\"crew_id\":3,\"crew_name\":\"marta.kowalski@ovationvg.example\",\"pay_estimate\":\"310.00\",\"shift_id\":45,\"shift_title\":\"Load-in \\u2014 Ovation Center\",\"status\":\"A\"},{\"assignment_id\":134,\"crew_id\":7,\"crew_name\":\"deshawn.avery@ovationvg.example\",\"pay_estimate\":\"\",\"shift_id\":45,\"shift_title\":\"Load-in \\u2014 Ovation Center\",\"status\":\"E\"},{\"assignment_id\":135,\"crew_id\":11,\"crew_name\":\"priya.raman@ovationvg.example\",\"pay_estimate\":\"\",\"shift_id\":45,\"shift_title\":\"Load-in \\u2014 Ovation Center\",\"status\":\"E\"}],\"ends\":\"11/03/2026 18:00\",\"lead\":\"\",\"open_slots\":3,\"org_id\":12,\"shift_id\":45,\"slots\":4,\"staffing_status\":\"OPEN\",\"starts\":\"11/03/2026 08:00\",\"title\":\"Load-in \\u2014 Ovation Center\",\"venue\":\"Ovation Center\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 40,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/roster_rows",
+        "org": 12,
+        "query": {
+          "shift_id": 41
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "text/html; charset=utf-8",
+        "x-served-by": "callboard",
+        "x-trace-id": "9183ba33fc9e4a968560a9c90fcb68bb",
+        "content-length": "270",
+        "Connection": "close"
+      },
+      "body": "<tr class=\"cb-row\" data-aid=\"121\"><td>M. Kowalski</td><td>Accepted</td><td>$310.00</td></tr>\n<tr class=\"cb-row\" data-aid=\"122\"><td>D. Avery</td><td>Expired</td><td>&mdash;</td></tr>\n<tr class=\"cb-row\" data-aid=\"123\"><td>P. Raman</td><td>Expired</td><td>&mdash;</td></tr>"
+    },
+    {
+      "index": 41,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/message/list",
+        "org": 12,
+        "query": {
+          "crew_id": 7
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "6a0a70bf7ad0406492b23edabdf11045",
+        "content-length": "2064",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"messages\":[{\"body\":\"You have been offered a call: Strike \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":99,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Strike \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":97,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Evening show call \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":95,\"read\":\"N\",\"sent\":\"10/24/2026 10:29\",\"shift_title\":\"Matinee changeover \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Full day festival \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":93,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Full day festival \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":91,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Load-in \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":89,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Strike \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":87,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Strike \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Evening show call \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":85,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Evening show call \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Matinee changeover \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":83,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Matinee changeover \\u2014 Ovation Center\"},{\"body\":\"You have been offered a call: Load-in \\u2014 Ovation Center\",\"kind\":\"CALLOUT\",\"message_id\":81,\"read\":\"N\",\"sent\":\"09/24/2026 11:14\",\"shift_title\":\"Load-in \\u2014 Ovation Center\"}],\"page\":1,\"total\":10},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 49,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/shift/show",
+        "org": 7,
+        "query": {
+          "shift_id": 30
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "5361f974cc7e4afc8afb23ad6a1a5cbc",
+        "content-length": "788",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignments\":[{\"assignment_id\":88,\"crew_id\":2,\"crew_name\":\"marta.kowalski@harborlight.example\",\"pay_estimate\":\"217.00\",\"shift_id\":30,\"shift_title\":\"Strike \\u2014 Harbor Light Amp\",\"status\":\"X\"},{\"assignment_id\":89,\"crew_id\":6,\"crew_name\":\"deshawn.avery@harborlight.example\",\"pay_estimate\":\"\",\"shift_id\":30,\"shift_title\":\"Strike \\u2014 Harbor Light Amp\",\"status\":\"X\"},{\"assignment_id\":90,\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"pay_estimate\":\"\",\"shift_id\":30,\"shift_title\":\"Strike \\u2014 Harbor Light Amp\",\"status\":\"X\"}],\"ends\":\"12/01/2026 05:00\",\"lead\":\"\",\"open_slots\":5,\"org_id\":7,\"shift_id\":30,\"slots\":6,\"staffing_status\":\"CXL\",\"starts\":\"11/30/2026 22:00\",\"title\":\"Strike \\u2014 Harbor Light Amp\",\"venue\":\"Harbor Light Amp\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 50,
+      "request": {
+        "method": "GET",
+        "path": "/callboard/crew/show",
+        "org": 19,
+        "query": {
+          "crew_id": 1
+        },
+        "form": null
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:38:55 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "d3ada11049e84617b568e2f6c54c60eb",
+        "content-length": "38",
+        "Connection": "close"
+      },
+      "body": "{\"error\":\"not found\",\"result\":\"fail\"}\n"
+    },
+    {
+      "url": "http://localhost:8080/gateway/healthz",
+      "status": 200,
+      "body": "{\"ok\":true,\"backends\":{\"callboard\":\"http://callboard:8080\",\"encore\":\"http://encore:8080\"}}"
+    },
+    {
+      "url": "http://localhost:8092/healthz",
+      "status": 200,
+      "body": "{\"ok\":true}"
+    },
+    {
+      "index": 10,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/crew/update",
+        "org": 3,
+        "query": null,
+        "form": {
+          "crew_id": 9,
+          "notes": "cleared for fly rail as of this week"
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "76edf2eb6b6e4c26bdad2be352c0bf49",
+        "content-length": "211",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew_id\":9,\"crew_name\":\"priya.raman@meridianstage.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"cleared for fly rail as of this week\",\"org\":3,\"rate\":\"26.75\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 11,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/shift/create",
+        "org": 3,
+        "query": null,
+        "form": {
+          "venue_id": 1,
+          "title": "Emergency patch call",
+          "starts": "12/04/2026 07:00",
+          "ends": "12/04/2026 15:30",
+          "slots": 2
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "1848f204cd9b431399303ac00afb6f4a",
+        "content-length": "233",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"ends\":\"12/04/2026 15:30\",\"lead\":\"\",\"open_slots\":2,\"org_id\":3,\"shift_id\":62,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"12/04/2026 07:00\",\"title\":\"Emergency patch call\",\"venue\":\"The Aldwych\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 12,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/assignment/offer",
+        "org": 3,
+        "query": null,
+        "form": {
+          "shift_id": 20,
+          "crew_id": 13
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "49bfd4b3d07b4f978b4ba6105606f7b0",
+        "content-length": "215",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":182,\"crew_id\":13,\"crew_name\":\"owen.fitzgerald@meridianstage.example\",\"pay_estimate\":\"\",\"shift_id\":20,\"shift_title\":\"Strike \\u2014 Meridian Hall\",\"status\":\"O\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 13,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/assignment/accept",
+        "org": 3,
+        "query": null,
+        "form": {
+          "assignment_id": 23
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "a11f0faa83644c09b368ee539d969687",
+        "content-length": "226",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":23,\"crew_id\":5,\"crew_name\":\"deshawn.avery@meridianstage.example\",\"pay_estimate\":\"122.50\",\"shift_id\":8,\"shift_title\":\"Matinee changeover \\u2014 The Aldwych\",\"status\":\"A\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 14,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/message/confirm",
+        "org": 3,
+        "query": null,
+        "form": {
+          "message_id": 16
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "32f0a2bca6674db18857f3a2f060ce93",
+        "content-length": "224",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":24,\"crew_id\":9,\"crew_name\":\"priya.raman@meridianstage.example\",\"pay_estimate\":\"133.75\",\"shift_id\":8,\"shift_title\":\"Matinee changeover \\u2014 The Aldwych\",\"status\":\"A\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 15,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/message/send",
+        "org": 3,
+        "query": null,
+        "form": {
+          "crew_id": 1,
+          "body": "Park behind the dock tonight, alley is closed."
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "cfd5f13610b141d3a928ff199c289e8b",
+        "content-length": "182",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"body\":\"Park behind the dock tonight, alley is closed.\",\"kind\":\"NOTE\",\"message_id\":133,\"read\":\"N\",\"sent\":\"10/24/2026 11:39\",\"shift_title\":\"\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 26,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/crew/update",
+        "org": 7,
+        "query": null,
+        "form": {
+          "crew_id": 10,
+          "notes": "cleared for fly rail as of this week"
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "88e53e4315ed4c6b9afd4cba35dbbf0f",
+        "content-length": "210",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"cleared for fly rail as of this week\",\"org\":7,\"rate\":\"26.75\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 27,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/shift/create",
+        "org": 7,
+        "query": null,
+        "form": {
+          "venue_id": 3,
+          "title": "Emergency patch call",
+          "starts": "12/04/2026 07:00",
+          "ends": "12/04/2026 15:30",
+          "slots": 2
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "218148c7f52647b3bae362d2f940b8c7",
+        "content-length": "238",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"ends\":\"12/04/2026 15:30\",\"lead\":\"\",\"open_slots\":2,\"org_id\":7,\"shift_id\":63,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"12/04/2026 07:00\",\"title\":\"Emergency patch call\",\"venue\":\"Harbor Light Amp\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 28,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/assignment/offer",
+        "org": 7,
+        "query": null,
+        "form": {
+          "shift_id": 40,
+          "crew_id": 14
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "28a124ed319d4c6380e818d732b487e4",
+        "content-length": "215",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":183,\"crew_id\":14,\"crew_name\":\"owen.fitzgerald@harborlight.example\",\"pay_estimate\":\"\",\"shift_id\":40,\"shift_title\":\"Strike \\u2014 The Beacon Room\",\"status\":\"O\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 29,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/assignment/accept",
+        "org": 7,
+        "query": null,
+        "form": {
+          "assignment_id": 83
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "31d2a39f1de84f6eb567f603a94b1ca9",
+        "content-length": "37",
+        "Connection": "close"
+      },
+      "body": "{\"error\":\"not open\",\"result\":\"fail\"}\n"
+    },
+    {
+      "index": 30,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/message/confirm",
+        "org": 7,
+        "query": null,
+        "form": {
+          "message_id": 56
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "1088166bf78043339672106f70a5850b",
+        "content-length": "229",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":84,\"crew_id\":10,\"crew_name\":\"priya.raman@harborlight.example\",\"pay_estimate\":\"133.75\",\"shift_id\":28,\"shift_title\":\"Matinee changeover \\u2014 Harbor Light Amp\",\"status\":\"A\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 31,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/message/send",
+        "org": 7,
+        "query": null,
+        "form": {
+          "crew_id": 2,
+          "body": "Park behind the dock tonight, alley is closed."
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "f97b38d59bd2481cb5ed8e791217d446",
+        "content-length": "182",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"body\":\"Park behind the dock tonight, alley is closed.\",\"kind\":\"NOTE\",\"message_id\":136,\"read\":\"N\",\"sent\":\"10/24/2026 11:39\",\"shift_title\":\"\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 42,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/crew/update",
+        "org": 12,
+        "query": null,
+        "form": {
+          "crew_id": 11,
+          "notes": "cleared for fly rail as of this week"
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "51760206e5fe4b54913e59b17d8e6eb3",
+        "content-length": "209",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"crew_id\":11,\"crew_name\":\"priya.raman@ovationvg.example\",\"display_name\":\"P. Raman\",\"is_lead\":\"N\",\"notes\":\"cleared for fly rail as of this week\",\"org\":12,\"rate\":\"26.75\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 43,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/shift/create",
+        "org": 12,
+        "query": null,
+        "form": {
+          "venue_id": 5,
+          "title": "Emergency patch call",
+          "starts": "12/04/2026 07:00",
+          "ends": "12/04/2026 15:30",
+          "slots": 2
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "0255e2d60cb9430797b4dea20aabe8fa",
+        "content-length": "237",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"ends\":\"12/04/2026 15:30\",\"lead\":\"\",\"open_slots\":2,\"org_id\":12,\"shift_id\":64,\"slots\":2,\"staffing_status\":\"OPEN\",\"starts\":\"12/04/2026 07:00\",\"title\":\"Emergency patch call\",\"venue\":\"Ovation Center\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 44,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/assignment/offer",
+        "org": 12,
+        "query": null,
+        "form": {
+          "shift_id": 50,
+          "crew_id": 15
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "e496e50e3dda453f873032f91fdcff4d",
+        "content-length": "212",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":184,\"crew_id\":15,\"crew_name\":\"owen.fitzgerald@ovationvg.example\",\"pay_estimate\":\"\",\"shift_id\":50,\"shift_title\":\"Strike \\u2014 Ovation Center\",\"status\":\"O\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 45,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/assignment/accept",
+        "org": 12,
+        "query": null,
+        "form": {
+          "assignment_id": 143
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "4c1ae656534647448c3ebf1112d04993",
+        "content-length": "227",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":143,\"crew_id\":7,\"crew_name\":\"deshawn.avery@ovationvg.example\",\"pay_estimate\":\"122.50\",\"shift_id\":48,\"shift_title\":\"Matinee changeover \\u2014 Ovation Center\",\"status\":\"A\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 46,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/message/confirm",
+        "org": 12,
+        "query": null,
+        "form": {
+          "message_id": 96
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "8fcb6400f614470eb84b0941ae5dc381",
+        "content-length": "226",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"assignment_id\":144,\"crew_id\":11,\"crew_name\":\"priya.raman@ovationvg.example\",\"pay_estimate\":\"133.75\",\"shift_id\":48,\"shift_title\":\"Matinee changeover \\u2014 Ovation Center\",\"status\":\"A\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 47,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/message/send",
+        "org": 12,
+        "query": null,
+        "form": {
+          "crew_id": 3,
+          "body": "Park behind the dock tonight, alley is closed."
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "a1ed494d69bd4ae396e31836c394e997",
+        "content-length": "182",
+        "Connection": "close"
+      },
+      "body": "{\"data\":{\"body\":\"Park behind the dock tonight, alley is closed.\",\"kind\":\"NOTE\",\"message_id\":139,\"read\":\"N\",\"sent\":\"10/24/2026 11:39\",\"shift_title\":\"\"},\"result\":\"ok\",\"tg_flash\":null}\n"
+    },
+    {
+      "index": 48,
+      "request": {
+        "method": "POST",
+        "path": "/callboard/shift/cancel",
+        "org": 7,
+        "query": null,
+        "form": {
+          "shift_id": 30
+        }
+      },
+      "status": 200,
+      "headers": {
+        "date": "Sat, 24 Oct 2026 16:39:10 GMT",
+        "server": "uvicorn",
+        "content-type": "application/json",
+        "x-served-by": "callboard",
+        "x-trace-id": "65e3584785834e40a731f1e098225840",
+        "content-length": "46",
+        "Connection": "close"
+      },
+      "body": "{\"error\":\"already cancelled\",\"result\":\"fail\"}\n"
+    },
+    {
+      "url": "http://localhost:8080/gateway/healthz",
+      "status": 200,
+      "body": "{\"ok\":true,\"backends\":{\"callboard\":\"http://callboard:8080\",\"encore\":\"http://encore:8080\"}}"
+    },
+    {
+      "url": "http://localhost:8092/healthz",
+      "status": 200,
+      "body": "{\"ok\":true}"
+    }
+  ]
+}

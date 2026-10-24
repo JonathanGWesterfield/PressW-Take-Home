@@ -227,6 +227,7 @@ __marimo__/
 # Full local investigation snapshots are consolidated into this review artifact.
 /investigation/evidence/*.json
 !/investigation/evidence/db-timeline.json
+!/investigation/evidence/recorded-replay-2026-10-24.json
 
 # Isolated verification reports and Compose runtime identity.
 /test-results/
