@@ -1,7 +1,9 @@
 # Wave 1: crew reads, compatibility, and migration
 
-Status: proposed implementation design, 2026-10-24. This document specifies work;
-it does not claim Encore compatibility or customer cutover is complete.
+Status: implementation design with partial working-tree implementation, 2026-10-24.
+Repository/service and modern v3 reads now exist; legacy compatibility and
+customer cutover remain incomplete. Proposed steps below are acceptance work,
+not claims that they have passed.
 
 ## 1. Goal and boundary
 
@@ -24,9 +26,12 @@ and reverse engineering.
 
 ## 2. Current evidence and gaps
 
-The [brief](../README.md), [seam map](../SEAMS.md), and
+The [brief](../README.md), [submission seam map](SEAMS.md), and
 [crew behavior notes](../investigation/LEGACY_CREW_BEHAVIOR.md) establish the
-scope and contracts. `encore/app/main.py` currently exposes only `/healthz`.
+scope and contracts. The current working tree registers modern crew routes from
+`encore/app/main.py` alongside `/healthz`, backed by crew models, repository, and
+service modules. The proposed `legacy.py` adapter does not exist yet. See
+[trade-offs](TRADEOFFS.md) for saved test results and outstanding acceptance gaps.
 `proxy/app.py` rereads its route file per request, chooses the longest path
 prefix, and matches org overrides using the **exact header string**.
 
@@ -63,7 +68,8 @@ flowchart LR
     C --> D
 ```
 
-Proposed additions under `encore/app/crew/`:
+Modules under `encore/app/crew/` (repository/service/v3 now present in the
+working tree; legacy remains proposed):
 
 | Module | Responsibility |
 | --- | --- |
@@ -185,7 +191,8 @@ python3 scripts/verify --backend encore
 python3 scripts/verify --backend gateway
 ```
 
-These are implemented entry points, but currently Encore lacks wrappers and the
+These are implemented entry points; Encore has partial modern read implementation
+but still lacks wrappers, and the
 gateway mode applies the direct corpus to a different boundary. Slice D must
 make gateway verification boundary-aware: keep direct golden comparisons
 unchanged and compare gateway responses against independently observed ingress
