@@ -19,6 +19,8 @@ Observations below describe specific experiments, not universal guarantees.
 | `shift-cancel`, `shift-cancel-repeat` | Shift became CXL, assignments 88–90 became X, three CXL messages appeared; open slots was not reset. Repeat returned `already cancelled` without writes. | Cancellation spans scheduling/messages and contains observable stale projections and failure behavior. |
 | `after-cancel-repeat` → `after-maintenance` | At 16:19:18 UTC, 82 old offers became E, eight ACCEPT queue entries disappeared, three DIGEST messages appeared; no crew/venue/shift/pay changes observed. | Maintenance owns assignments, queue, and messages; this tick did not establish reconciliation or repricing. |
 | Same tick, org 7 | Crew 18 received DIGEST; crew 2, whose lead flag was cleared, did not, despite digest preference Y. | Digest eligibility depends on crew state; exact precedence remains unresolved. |
+| [Full replay and direct SQL follow-up](../investigation/MAINTENANCE_BEHAVIOR.md), 13:08:03 → 13:09:06 America/Chicago | After all 51 supplied requests, three previously prepared ACCEPT queue events disappeared and five DIGEST messages appeared. All captured crew, venue, shift and assignment fields stayed unchanged. | Independent evidence for queue consumption and per-org digest fan-out; immediate replay/acceptance effects are excluded from this maintenance delta. |
+| Same experiment, follow-up through 13:15:13 | No additional captured changes across the next expected window; queue remained empty. | No duplicate digests were observed; unchanged snapshots do not independently prove another job execution. |
 | `confirm-after-expiry`, `accept-after-expiry`, `confirm-repeat` | `not open`; snapshots showed no corresponding writes. | Preserve failure behavior; do not silently make repeats idempotent successes. |
 | [Frozen corpus](../tests/characterization/README.md), [crew notes](../investigation/LEGACY_CREW_BEHAVIOR.md) | 171 original and 828 fuzz request/response cases captured before Encore; encoded routes, duplicate headers, raw preferences, nulls, and exact bytes matter. | The reference is executable and independent of the new implementation; its coverage is bounded. |
 | [Gateway boundary](../investigation/evidence/gateway-boundary.jsonl) | Direct HEAD/OPTIONS return 200, gateway returns 405; 308 redirect Host/HTML differs by ingress. | Direct and gateway parity need different observed baselines. |
@@ -43,23 +45,31 @@ Observations below describe specific experiments, not universal guarantees.
 
 | Wave | What moves (endpoints, behaviors, tables) | Why this is safe to move as a unit |
 | --- | --- | --- |
-| 1 | Org-7 crew list/show reads plus modern list/detail; read existing `tg_crew`. | No new writes, copied state, or maintenance worker. Callboard retains all writers/jobs; next-request reads observe committed shared data. This is the selected boundary, not a completed cutover. |
+| 1 | Org-7 crew list/show reads plus modern list/detail; read existing `tg_crew`. | No new writes, copied state, or maintenance worker. Callboard retains all writers/jobs; next-request reads observe committed shared data. Implemented and verified directly and at ingress; I1 demonstrated actual org-7 cutover/rollback/reapply. Final integrated R1 review remains pending. |
 | 2 | Coordinated scheduling slice: crew writes, shift operations/roster, assignment offer/accept, message confirmation, cancellation, and associated background invariants over crew/venues/shifts/assignments/messages/queue. | Keep acceptance entry points and dependent writes under one defined transaction/job owner. Subdivide only after characterizing and preserving those contracts. Not yet proven safe or implemented. |
 | 3 | Remaining manual messaging, delivery/read preferences, and retirement of residual legacy endpoints/jobs/storage. | Move after scheduling producers/consumers have explicit contracts and legacy jobs can be disabled safely. Requires additional discovery. |
 
 ## Cut couplings & mitigations
 
 - **Legacy writer / Encore reader:** org 7's crew update remains on Callboard;
-  Encore reads `tg_crew` directly without caches. Verify an HTTP update followed
-  by Encore list/detail, including v3, and compare read-side DB state. Do not
+  Encore reads `tg_crew` directly without caches. The isolated gateway suite
+  verifies a persisted legacy HTTP update followed by wrapper and v3 list/detail
+  reads, then restores fixture state and checks scoped DB invariants. I1
+  repeated live write visibility and restored crew state exactly. Do not
   route the whole crew prefix: it includes update. Use individual list/show
   prefixes with an org-7 override and legacy defaults.
 - **Gateway / wrapper:** prefix routing also selects suffixes and wrong methods;
   exact header-string matching leaves some padded org values on legacy. Preserve
   those decisions and compare actual ingress bytes/headers against legacy before
-  cutover. Demonstrate rollback by changing only the two org overrides. Prepare
-  directory mounting and atomic route publication first; the supplied single-file
-  mount can retain a replaced inode, and in-place writes can expose partial YAML.
+  cutover. Isolated tests demonstrate rollback by changing only the two org
+  overrides and checking the same gateway instance. The deployment configuration
+  uses a directory mount for atomic rename. The first host-side publication
+  caused 28 HTTP 500s on the Mac/Colima share before recovery. I1 corrected it
+  with validated publication from a temporary Linux-view container, then
+  demonstrated cutover/rollback/reapply with the same gateway instance and 58
+  successful sampled requests. Use the corrected [D2 publisher](../tasks/D2-rollout-configuration.md);
+  host-side rename alone is unsafe on this share. The supplied single-file
+  mount can retain a replaced inode; in-place writes can expose partial YAML.
 - **Crew writes / legacy scheduling:** changing rate/lead semantics could alter
   future pay or digest recipients. Preserve shared field meaning and do not add
   repricing; characterize more before transferring writes.
@@ -82,7 +92,10 @@ Observations below describe specific experiments, not universal guarantees.
   moves; production org authentication before trusting client-supplied identity.
 - Remaining unrecorded operations and real tenant sizes; the finite recording and
   corpus are not the full production API.
-- Wave-1 release evidence: unchanged direct corpus against Encore, modern checks,
-  actual org-7 ingress/mixed-state tests, HTTP-write visibility, and a demonstrated
-  config-only rollback. All remain acceptance gates; [current status](TRADEOFFS.md)
-  explicitly distinguishes partial implementation and saved test results.
+- [R1](../tasks/R1-independent-review.md) integrated review, remote CI execution/branch
+  enforcement and candidate-supplied interview timing remain outstanding.
+  Direct legacy/Encore, modern and gateway/mixed checks pass; the saved
+  [I1 evidence](../investigation/evidence/i1-integration-20261024.jsonl) demonstrates
+  actual cutover/rollback/reapply after a corrected publication failure.
+  [Current evidence](TRADEOFFS.md) lists exact reports, reconciled counts and
+  limits; finite success samples do not prove every possible interleaving.

@@ -1,53 +1,98 @@
 # Trade-offs
 
-- **Built vs. scoped:** the Git history shows investigation and a wave proposal
-  (`7edec10`), frozen/fuzz characterization (`c0691e3`, `063439c`), an isolated
-  runner (`2d7b17c`), identical legacy/Encore verification targets (`fe841dd`),
-  and the detailed design (`5f169dd`). The uncommitted working tree adds modern
-  crew reads and their repository/service/tests. This establishes a reference
-  and part of the port; it does not yet satisfy the brief's legacy wrappers,
-  org cutover, or demonstrated rollback. I spent more of the available work on
-  discovery and repeatable evidence than on completing the cutover.
-- **Specific trade-offs and why:** two reads over shared `tg_crew` avoid a second
-  writer, data replication, and a background-job handoff. One ordered query and
-  in-memory pagination keep page/total aligned at fixture scale, at O(tenant crew
-  count) memory. Separate adapters preserve legacy quirks without making the new
-  API inherit HTTP-200 failures, negative slicing, or database diagnostics.
-  Modern v3 uses positive ASCII-decimal IDs, bounded page sizes, 422 validation,
-  common owned/missing 404s, nullable two-decimal money strings, boolean lead flags,
-  and raw nullable preferences because some stored text is invalid JSON.
-  The unchanged golden corpus remains the oracle; adding an Encore target does
-  not make that target pass. AI-assisted investigation and implementation were
-  used, as the brief permits; the evidence and acceptance gates remain explicit.
-- **What you'd do next with more time:** finish modern verification, implement the
-  legacy adapter against the frozen corpus, then compare independently captured
-  gateway expectations using the actual two-prefix/org-7 routing table. Verify a
-  legacy HTTP update becomes visible on the next Encore read, check read-side DB
-  invariance, and rehearse config-only rollback. Address the route-file mount and
-  atomic publication hazard described in [the design](WAVE1_DESIGN.md) before
-  cutover. Require passing legacy, Encore, modern, and mixed-ingress CI checks;
-  workflow YAML alone does not establish remote branch protection. Only then
-  investigate later-wave transactions, concurrency, expiry, and job ownership.
-- **Known issues or unhandled cases:** there is no legacy adapter in the current
-  source and `proxy/routes.yaml` still routes everything to Callboard. Existing
-  `tests/routes.yaml` routes all crew orgs to Encore and is not a safe rollout
-  configuration. Direct HEAD/OPTIONS and redirect-host behavior differ at the
-  gateway boundary. No current mixed-state or rollback acceptance result exists.
-  The recorded reference run `showcall-verify-97b2bcc6fa04` has JUnit reporting
-  1,041 tests with zero failures/errors, while its JSONL manifest says 1,028
-  passes; those counts need reconciliation before a final evidence summary.
-  The later local run `showcall-verify-d9a76c84db3a` reports 1,044 tests and one
-  failure: HTTPX rejects a non-ASCII header while constructing a v3 unit-test
-  request, before the application handles it. The preceding run
-  `showcall-verify-f1b0a15bb479` failed collection on duplicate test module names.
-  These are saved local artifacts under ignored `test-results/`, not a fresh
-  verification by this writeup. The source/tests may have advanced since those
-  runs; no current all-green claim is made. Maintenance and write probes show
-  effects, not proven atomicity, retry safety, or a complete production contract.
-- **Post-window commits, if any:** the exact delivery/start time is not recorded
-  in this repo, so I cannot reliably label commits as inside or outside the
-  four-hour window from Git timestamps alone. The investigation's approximately
-  11:14 America/Chicago stack-start time explicitly is not the assessment start.
-  HEAD is `5f169dd` (13:04 America/Chicago); modern source/tests and these writeups
-  are currently uncommitted. Reconcile the actual delivery time and label any
-  post-window work before submission; do not infer that no overrun occurred.
+- **Built vs. scoped:** Wave 1 now has shared tenant-scoped retrieval, modern
+  crew reads (`69438b9`), legacy-compatible list/show wrappers and verification
+  support (`4ff8a3c`), gateway acceptance (`b1716ae`), a directory-mounted route publication
+  runbook (`3c39025`), and three named CI gates (`c46b810`). The unchanged
+  characterization corpus passes locally against both backends. The gateway
+  suite checks its distinct ingress behavior, mixed routing, legacy HTTP-write
+  visibility, read-side database invariants, and config-only rollback in an
+  isolated stack. I1 also demonstrated actual org-7 cutover, rollback and final
+  Encore reapply with the same gateway instance, after correcting a failed
+  publication attempt. Final integrated R1 review remains pending.
+- **Specific trade-offs and why:** two reads over shared `tg_crew` avoid a
+  second writer, replication and job handoff. One ordered query plus in-memory
+  pagination keeps page/total aligned at fixture scale with O(tenant crew count)
+  memory. Both adapters call the shared service directly. Legacy preserves
+  pagination quirks, error precedence and exact captured wire output; bound raw
+  IDs retain PostgreSQL conversion behavior without SQL interpolation. Modern
+  v3 deliberately uses positive ASCII-decimal IDs, page sizes 1–100, 422
+  validation, common missing/foreign 404s, nullable two-decimal money strings,
+  boolean lead flags and nullable raw preferences (some stored text is invalid
+  JSON). It rejects duplicate/unknown parameters and duplicate tenant headers.
+  No new authentication or preferences cleanup is implied. AI-assisted discovery,
+  implementation and review were used, as permitted by the brief.
+- **What you'd do next with more time:** complete R1's integrated review and
+  reconcile any corrections before declaring the wave complete. Retain the I1
+  rollout/recovery evidence and corrected deployment publisher.
+  Run the three checks on GitHub and configure required PR checks for `main`:
+  **Direct legacy and modern**, **Direct Encore and modern**, and **Gateway
+  ingress and mixed routing**. Workflow YAML alone does not enforce them.
+  Later waves need acceptance/confirmation/cancellation transaction ownership,
+  concurrent-write probes, expiry policy, digest recipient rules and worker
+  handoff; these are outside the two-read migration.
+- **Known issues or unhandled cases:** no exhaustive equivalence claim is made
+  for malformed HTTP, concurrent mutations or unobserved legacy behavior.
+  Gateway HEAD/OPTIONS remain 405 even where direct legacy permits them;
+  redirects and duplicate-header forwarding retain observed ingress behavior.
+  Atomic route publication needs the containing-directory bind mount and
+  verified host-to-container visibility. I1's first host-side rename exposed a
+  transient missing route file in Colima and caused 28 HTTP 500s before recovery.
+  The corrected publisher validates and atomically replaces the file from a
+  temporary Linux-view container; the gateway mount remains read-only. The
+  repeated rehearsal sampled 58 successful requests across cutover, rollback,
+  write/restore and final Encore reapply. This is evidence for the corrected
+  procedure, not a zero-disruption claim for the failed attempt or every future
+  filesystem/interleaving. No last-known-good YAML fallback exists.
+  Maintenance stays on Callboard; observations do not prove job transaction
+  order, crash/retry safety or external message delivery. Local evidence below
+  supersedes old collection/header-construction failures in earlier artifacts;
+  remote Actions execution and branch enforcement remain unverified.
+- **Post-window commits, if any:** the kit delivery time is not recorded in the
+  repo. The approximately 11:14 America/Chicago stack start was an investigation
+  timestamp, not the assessment start. Git timestamps cannot establish which
+  commits were within the four-hour window. The candidate must supply that
+  delivery time and label post-window work before submission; this writeup does
+  not infer either compliance or an overrun. Wrapper/support code is committed
+  as `4ff8a3c`; I1 rehearsal evidence and the final route configuration are
+  committed as `05bd1c0`. This documentation records those verified local results.
+
+## Verification evidence
+
+These are saved I1 local runs of the combined tree, inspected for this writeup;
+E2 did not start containers or rerun the stack. Reports are ignored local
+artifacts, not remote CI results. Each directory contains `run.txt`,
+`exit-code.txt`, `junit.xml` and timestamped `compose.log`. I1 ran
+`python3 scripts/verify --backend both` for the first two stages below; the
+individual commands reproduce the same target gates.
+
+| Full command | Saved report under `test-results/` | Result |
+| --- | --- | --- |
+| `python3 scripts/verify --backend legacy` | `showcall-verify-814fd83dd4ff/` | Exit 0; 1,084 pytest test cases; no failures/errors/skips |
+| `python3 scripts/verify --backend encore` | `showcall-verify-a4e3b870b5e4/` | Exit 0; same 1,084 test cases; no failures/errors/skips |
+| `python3 scripts/verify --backend gateway` | `showcall-verify-66349a73c416/` | Exit 0; 81 test cases; no failures/errors/skips |
+
+The direct JUnit suites report `tests=1097`, but each contains 1,084
+`testcase` elements: unittest subtest counters add 13. These are not 13
+additional pytest methods. The gateway report has 81 entries and counter 81.
+Direct targets run the frozen corpus, properties, units, modern and ingress
+checks; gateway mode selects its ingress/mixed suite plus units, smoke and
+modern checks. Frozen response files are not changed to accommodate Encore.
+See [test instructions](../tests/README.md), [I1](../tasks/I1-integration-rehearsal.md)
+for live artifacts and final state, and [R1](../tasks/R1-independent-review.md)
+for the pending integrated verdict. E2's document review is not R1 approval.
+
+The compact [I1 evidence](../investigation/evidence/i1-integration-20261024.jsonl)
+records the failed publication, correction, full gate identities, live routing
+phases and final config hash. Raw local evidence is in `test-results/i1-live-final/`:
+`summary.json`, `publication.jsonl`, `continuous-ingress.json`, phase responses,
+gateway identities and DB comparisons. Crew rows and schema matched before/after;
+a temporary legacy notes update was visible through wrapper/v3 list/detail and
+was restored exactly. Captured noncrew tables were unchanged in this rehearsal;
+that does not mean maintenance is disabled. Only the gateway was recreated for
+preparation, before the baseline; its instance/container stayed unchanged during
+cutover, rollback and reapply. The active route table selects Encore only for
+canonical org `7` on the two read prefixes; all writes/jobs stay legacy. Use the
+corrected `publish_d2_routes` procedure in [D2](../tasks/D2-rollout-configuration.md)
+to publish `tests/routes/legacy.yaml` for rollback, without restart. Modern
+clients remain direct Encore. Final R1 review and remote enforcement are pending.
