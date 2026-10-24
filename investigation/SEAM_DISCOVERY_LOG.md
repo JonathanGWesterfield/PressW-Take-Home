@@ -1,4 +1,11 @@
-# Seam map and migration proposal
+# Seam discovery log
+
+The authoritative submission seam map and wave plan live in
+[templates/SEAMS.md](../templates/SEAMS.md). This supporting log preserves the
+original detailed probes and intermediate implementation snapshots. Read the
+submission map for current decisions and [trade-offs](../templates/TRADEOFFS.md)
+for final evidence and remaining actions. Earlier pending-state statements and
+file paths in versioned evidence describe their recorded revision.
 
 Investigation started 2026-10-24, approximately 11:14 America/Chicago, when the stack
 first started successfully. This is not a claim about when the assessment timer began.
@@ -8,8 +15,8 @@ All discovery used the supplied schema/source, public HTTP endpoints, and Postgr
 ## Evidence and probe log
 
 Exact HTTP requests, status codes, headers, and response bodies are in
-[`investigation/evidence/http.jsonl`](investigation/evidence/http.jsonl); use the
-labels below to locate probes. [`investigation/evidence/db-timeline.json`](investigation/evidence/db-timeline.json)
+[`investigation/evidence/http.jsonl`](../investigation/evidence/http.jsonl); use the
+labels below to locate probes. [`investigation/evidence/db-timeline.json`](../investigation/evidence/db-timeline.json)
 contains a complete baseline and ordered field changes for every snapshot.
 Raw snapshots remain local; password hashes are omitted from both forms.
 `python3 investigation/probe.py --snapshot NAME` captures all six tables in one
@@ -43,14 +50,14 @@ the supplied writes. It uses Python's standard library and installs nothing.
 | Same maintenance interval | Org 3's four queued accepts were summarized for crew 1 and 17; org 7's four accepts for crew 18. Crew 2, whose lead flag had been cleared, received none despite `prefs.digest` still being Y. | Digest delivery depends on crew state as well as queued scheduling events. Lead eligibility and preference precedence need isolated follow-up probes. |
 | `confirm-after-expiry`, `accept-after-expiry`, `confirm-repeat`; `after-maintenance` → `after-expired-confirm` → `after-repeat-confirm` | Expired and repeated accept/confirm attempts return `not open`. All six tables remain identical across these snapshots. | In these failures, confirmation did not mark the original message read or append a notification. |
 | `crew-list-post`, `crew-show-trailing-slash` | Wrong method and trailing-slash routes return HTTP 200 JSON containing 405/404 error strings. | Framework-default HTTP 405/404 or redirect behavior would differ. Route matching is part of wrapper fidelity. |
-| [Frozen crew contract](tests/characterization/README.md), captured before implementing Encore endpoints | 171 exact request/response cases using 32 reverse-inserted fixture crew plus a second org; behavioral tests cover committed-change visibility and all 13 recorded crew reads. | Wave 1 now has an executable legacy reference for serialization, pagination, tenant scope, malformed inputs, methods, and route shape. The same reference can later test Encore wrappers. |
-| [Detailed crew nuances](investigation/LEGACY_CREW_BEHAVIOR.md) and 828 frozen fuzz cases | Encoded paths resolve to working routes; double slashes redirect with HTTP 308 HTML. Pagination accepts Unicode digits; PostgreSQL IDs additionally accept hex/octal/binary/underscore forms. Duplicate org headers fail. Every fuzz response matched its repeat observation. | Exact compatibility requires matching parsing and HTTP-stack behavior, not just the successful JSON shape. The complete suite now contains 1,001 tests, with the original 171 responses preserved. |
-| [Gateway boundary checks](investigation/evidence/gateway-boundary.jsonl): six direct/gateway HTTP requests | Direct crew HEAD/OPTIONS return 200; gateway HEAD/OPTIONS return 405. A double-slash detail path returns 308 at both boundaries, but its Location/HTML uses `localhost:8091` directly and `callboard:8080` through the gateway. | Direct-backend parity and frontend-ingress parity need separate baselines. Do not change existing gateway method or redirect behavior as an incidental migration cleanup. |
+| [Frozen crew contract](../tests/characterization/README.md), captured before implementing Encore endpoints | 171 exact request/response cases using 32 reverse-inserted fixture crew plus a second org; behavioral tests cover committed-change visibility and all 13 recorded crew reads. | Wave 1 now has an executable legacy reference for serialization, pagination, tenant scope, malformed inputs, methods, and route shape. The same reference can later test Encore wrappers. |
+| [Detailed crew nuances](../investigation/LEGACY_CREW_BEHAVIOR.md) and 828 frozen fuzz cases | Encoded paths resolve to working routes; double slashes redirect with HTTP 308 HTML. Pagination accepts Unicode digits; PostgreSQL IDs additionally accept hex/octal/binary/underscore forms. Duplicate org headers fail. Every fuzz response matched its repeat observation. | Exact compatibility requires matching parsing and HTTP-stack behavior, not just the successful JSON shape. The complete suite now contains 1,001 tests, with the original 171 responses preserved. |
+| [Gateway boundary checks](../investigation/evidence/gateway-boundary.jsonl): six direct/gateway HTTP requests | Direct crew HEAD/OPTIONS return 200; gateway HEAD/OPTIONS return 405. A double-slash detail path returns 308 at both boundaries, but its Location/HTML uses `localhost:8091` directly and `callboard:8080` through the gateway. | Direct-backend parity and frontend-ingress parity need separate baselines. Do not change existing gateway method or redirect behavior as an incidental migration cleanup. |
 
 ## Recorded traffic replay follow-up (2026-10-24, approximately 11:39 America/Chicago)
 
 Raw requests, response headers, HTTP statuses, and bodies are saved in
-[`investigation/evidence/recorded-replay-2026-10-24.json`](investigation/evidence/recorded-replay-2026-10-24.json).
+[`investigation/evidence/recorded-replay-2026-10-24.json`](../investigation/evidence/recorded-replay-2026-10-24.json).
 Indices below are zero-based positions in `traffic/traffic.jsonl`.
 
 All **51 recorded requests**, covering **13 distinct method/path pairs**, were
@@ -181,11 +188,11 @@ Exit conditions before declaring wave 1 complete:
 
 ## Wave 1 implementation progress: slices A through C
 
-The [design's implementation sequence](templates/WAVE1_DESIGN.md#6-implementation-slices-and-verification)
+The [design's implementation sequence](../templates/WAVE1_DESIGN.md#6-implementation-slices-and-verification)
 has reached **C: legacy read wrappers**. Reference preservation (A) was
 rechecked before code changes: the full legacy gate passed 1,028 tests, and both
 frozen corpus hashes plus the fixture hash were recorded in
-[`wave1-reference-manifest.jsonl`](investigation/evidence/wave1-reference-manifest.jsonl).
+[`wave1-reference-manifest.jsonl`](../investigation/evidence/wave1-reference-manifest.jsonl).
 Those hashes remain unchanged after implementation.
 
 Encore now provides `GET /v3/crew` and `GET /v3/crew/{crew_id}` through one shared
@@ -194,7 +201,7 @@ in the database predicate, and close a fresh session after each retrieval. List
 pagination and totals use the same ordered query result. The modern adapter
 preserves nulls/raw preferences and formats money as decimal strings; its strict
 validation and boolean lead field follow the intentional modern contract in
-[the endpoint documentation](api-endpoints.md) and OpenAPI.
+[the endpoint documentation](../api-endpoints.md) and OpenAPI.
 
 The implementer and independent reviewer each ran the complete isolated
 `python3 scripts/verify --backend legacy` gate: **1,060 pytest tests passed** in
@@ -228,7 +235,7 @@ and modern regressions. Its isolated reports are
 the existing source directory during early pytest plugin discovery. New public
 Callboard probes also established additional org-header and HTML-escaping quirks;
 their source evidence and focused regression coverage are described in the
-[behavior notes](investigation/LEGACY_CREW_BEHAVIOR.md#slice-c-follow-up-observations-2026-10-24).
+[behavior notes](../investigation/LEGACY_CREW_BEHAVIOR.md#slice-c-follow-up-observations-2026-10-24).
 The frozen corpus and fixture hashes remain unchanged.
 
 Independent Slice C review **passed** against the design, assessment README,
@@ -248,28 +255,36 @@ Slice D's prepared implementation passed independent isolated gates:
 `showcall-verify-f61f993f62e1` (Encore, 1,076), and
 `showcall-verify-79d7851d1749` (gateway, 73), with no failures/errors/skips.
 Subsequent parallel D1 work expanded gateway coverage and independently passed
-81 tests in `showcall-verify-ee1b1f804be9`; I1 must run the combined final tree.
+81 tests in `showcall-verify-ee1b1f804be9`. At that prepared-slice snapshot,
+combined final verification remained I1's next step.
 The original 14-case gateway source observations are retained in
-[`slice-d-original-gateway-20261024.jsonl`](investigation/evidence/slice-d-original-gateway-20261024.jsonl).
+[`slice-d-original-gateway-20261024.jsonl`](../investigation/evidence/slice-d-original-gateway-20261024.jsonl).
 The shared-stack live rehearsal attempted by this chat did not execute: automatic
 approval review rejected the command before startup, citing a development-write
 risk. No live rehearsal artifact was created and this chat left routing legacy.
-The newly assigned [I1 integration task](tasks/I1-integration-rehearsal.md) owns
+The newly assigned [I1 integration task](../tasks/I1-integration-rehearsal.md) owns
 subsequent combined verification and shared-stack changes; prepared test results
 are not a claim that live cutover or rollback has happened.
 
-**Wave 1 migration is still incomplete.** Slice D
-must demonstrate actual mixed routing, legacy HTTP-write visibility, ingress
-parity, and config-only rollback. Slice E must complete the acceptance matrix
-and submission evidence. No production route, table schema, or legacy write/job
-ownership changed in slice B.
+**Subsequent integrated outcome:** I1 completed the combined matrix: 1,084 tests
+per direct backend and 81 in the gateway target, with no failures/errors/skips.
+The initial Colima host-side publication caused 28 HTTP 500s; a corrected
+Linux-view publisher then passed actual org-7 cutover, legacy HTTP-write
+visibility, config-only rollback and final Encore reapply with the same gateway
+instance and 58 successful samples. The failure is retained rather than counted
+as successful zero-disruption evidence. Crew state/schema were restored, and
+Callboard retained writes/jobs. [I1 evidence](../investigation/evidence/i1-integration-20261024.jsonl),
+[R1 acceptance](../tasks/R1-independent-review.md), and [remote CI metadata](../investigation/evidence/github-actions-20261024.jsonl)
+supersede the intermediate pending-acceptance state above without changing its
+historical observations.
 
 ## Cut couplings and mixed-routing mitigation
 
 - In wave 1, legacy remains the writer of `tg_crew` and owner of every background
   job. Encore reads committed rows directly without caches. A legacy update must
   immediately be visible through Encore's next read. Check this in mixed-routing
-  acceptance tests and compare all-table snapshots around read requests.
+  acceptance tests; compare crew globally and other tables for reserved fixture
+  orgs around reads. Unrelated seeded scheduling may change under maintenance.
 - Configure **individual endpoint prefixes** for org 7 rather than
   `/callboard/crew/`, which would accidentally send `crew/update` to Encore.
   The supplied gateway uses prefix matching, not HTTP method matching; confirm
@@ -292,13 +307,14 @@ ownership changed in slice B.
   assignments. Separate autocommitted writes would expose half-updated staffing
   or messages; contention and replay behavior remain to be characterized.
 
-## Open questions before customer cutover
+## Open questions before later-wave write/job migrations
 
 - Determine the exact expiry cutoff, digest eligibility/preference precedence,
   and crash/retry semantics. One tick establishes effects, not reliable delivery.
 - Crew defaults, nullable fields, repeated query keys, malformed/large values,
   and permitted methods are covered by the frozen characterization suite.
-  Concurrent modification between list count and page retrieval remains untested.
+  Concurrent mutations between requests remain uncharacterized; the implemented
+  single-query list retrieval keeps page and total consistent within a request.
 - Establish date boundaries, daylight-saving ambiguity/nonexistent times, and
   HTML escaping rules before migrating scheduling.
 - Probe duplicate offers, overbooking, concurrent confirm/accept/cancel, and

@@ -1,24 +1,25 @@
 # Scoping
 
-Evidence snapshot: 2026-10-24, through I1 commit `05bd1c0`. Direct/gateway
-verification, actual cutover/rollback evidence, and the final org-7 route
-configuration are saved and committed. R1 independently accepts the bounded
-local Wave 1 result; remote CI execution and required-check enforcement remain
-unverified release gates.
-See [current evidence](TRADEOFFS.md) and [I1](../tasks/I1-integration-rehearsal.md).
+We chose the first wave from observed coupling, rather than endpoint names.
+Acceptance, confirmation, cancellation and maintenance share scheduling/message
+state; crew list/show only read existing crew data in our probes. We froze their
+wire behavior before implementing Encore, then used the same tests against both
+backends. Two reads gave us a complete migration and rollback boundary without
+transferring a writer or background job. [The seam map](SEAMS.md) gives the
+observations behind that decision.
 
 - **Scope committed:** two read operations, initially for org 7:
   `GET /callboard/crew/list` and `GET /callboard/crew/show`, plus modern
   `GET /v3/crew` and `GET /v3/crew/{crew_id}`. One tenant-scoped retrieval
   service reads existing `tg_crew`; separate adapters own legacy wire behavior
-  and the intentional modern contract. Shared reads/v3 (`69438b9`), rollout
-  preparation (`3c39025`), CI gates (`c46b810`), and gateway acceptance
-  (`b1716ae`) are committed. The wrapper/verification support is committed as
-  `4ff8a3c` and passes the unchanged direct corpus. I1 (`05bd1c0`) demonstrated both reads
+  and the intentional modern contract. The unchanged direct corpus passes
+  against both backends. I1 (`05bd1c0`) demonstrated both reads
   moving to Encore, rolling back to Callboard and returning to Encore on the
   same gateway instance. The active configuration leaves canonical org 7
   on Encore for those two prefixes; R1 independently accepts this bounded local
-  result, while remote release enforcement remains outstanding.
+  result. [GitHub run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+  passed all three automatic checks and evidence uploads at `31758ea`. Later
+  documentation/IDE commits are outside that run; exercised code is unchanged.
 - **Scope cut:** no crew or scheduling/message writes, schema changes, data
   copy, cache, or Encore maintenance worker. Acceptance, confirmation,
   cancellation, queue draining, and digests share state across tables and
@@ -39,9 +40,14 @@ See [current evidence](TRADEOFFS.md) and [I1](../tasks/I1-integration-rehearsal.
   selection and exact org strings remain unchanged: `07` can stay legacy while
   `7` migrates, and suffixes of the two prefixes also reach the wrapper.
   Modern clients use Encore directly on port 8092; the rollout adds no gateway
-  `/v3` route. Moving only reads avoids a reverse data migration, but release
-  still requires remote CI execution and required-check enforcement. The first live route
+  `/v3` route. Moving only reads avoids a reverse data migration. The first live route
   publisher caused errors on the Mac/Colima share; a corrected Linux-view
-  publisher passed sampled cutover/rollback checks. Remote CI execution/branch
-  protection and the interview delivery
-  time are not established by local tests.
+  publisher passed sampled cutover/rollback checks. Use the tested
+  [Linux-view publisher](../tasks/D2-rollout-configuration.md) on this deployment.
+
+Before submission, make the repo private, grant the invite contacts access,
+record actual kit-delivery timing and label post-window work, and publish/verify
+the final revision. The planned required-check/PR gate is not enabled: GitHub
+reported `main` unprotected. These are separate from the observed CI success;
+[trade-offs and evidence](TRADEOFFS.md) distinguish what was demonstrated from
+what remains.

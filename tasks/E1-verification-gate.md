@@ -1,13 +1,13 @@
 # E1: finish the verification gate
 
 - **Owner:** `/root/e1_implementer` (review: `/root/e1_reviewer`)
-- **Status:** Implemented and independently reviewed; full integration/GitHub execution pending
+- **Status:** Implemented/reviewed; I1 and remote jobs/uploads passed; required-check/PR enforcement remains disabled
 - **Dependencies:** Can prepare in parallel; finalize scenario selection with D1 and runner changes with I1
 - **Last updated:** 2026-10-24; verify current working tree at task start
 
 ## Working context
 
-This is the interview-sized Wave 1 migration in PressW-Take-Home. Move only org 7's legacy crew list/show reads to Encore, with modern v3 reads sharing retrieval. Callboard retains every write and maintenance job against the shared database. Read the [design](../templates/WAVE1_DESIGN.md), [assessment brief](../README.md), [seam map](../SEAMS.md), and [coordination index](README.md). The working tree already contains substantial implementation; inspect it and saved results before making changes. Preserve unrelated edits and frozen corpora.
+This is the interview-sized Wave 1 migration in PressW-Take-Home. Move only org 7's legacy crew list/show reads to Encore, with modern v3 reads sharing retrieval. Callboard retains every write and maintenance job against the shared database. Read the [design](../templates/WAVE1_DESIGN.md), [assessment brief](../README.md), [seam map](../templates/SEAMS.md), and [coordination index](README.md). The working tree already contains substantial implementation; inspect it and saved results before making changes. Preserve unrelated edits and frozen corpora.
 
 ## Ownership
 
@@ -62,3 +62,17 @@ Update this section as work proceeds. Record exact commands/results and artifact
 - Integration requests / dependencies: I1 must run all three full commands against the final combined tree. D1/I1 should confirm the already-implemented gateway scenario selection; no runner changes requested.
 - Remaining risks or blockers: GitHub execution/upload and remote required-check enforcement are unverified; no remote settings were changed. Existing runner startup/test bounds fit the 30-minute automatic job; manual both has 60 minutes.
 - Final status and reviewer reference: `/root/e1_reviewer` approved the initial implementation with no implementation findings; final evidence wording was corrected as requested. Ready for I1 integration and final full verification. Packaged for a dedicated E1 commit; integration verification remains pending.
+
+### Subsequent integration and GitHub evidence (2026-10-24)
+
+The earlier progress/handoff above records E1's original scope. I1 subsequently
+passed the full local matrix and live rehearsal, and R1 accepted the local
+implementation. Read-only GitHub inspection now confirms [run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+at `31758ea` passed all three automatic verification jobs and upload steps;
+three nonexpired backend artifacts are listed. Their ZIP payloads were not
+downloaded/recounted in this inspection. [Saved metadata](../investigation/evidence/github-actions-20261024.jsonl)
+records the source revision, job/artifact identities and limitations.
+
+Later local documentation/IDE commits are outside that run, with executable
+code unchanged. GitHub reported `main` unprotected. Required-check/PR enforcement
+and final-revision publication/verification remain; no remote setting was changed.

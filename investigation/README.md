@@ -12,8 +12,10 @@ Assessment timer start is controlled by the candidate, not this timestamp.
   changes, added rows, and deleted rows. Empty `changes` means every captured
   table was identical. Raw per-step snapshots remain local and ignored to avoid
   repeating the same baseline in Git. Password hashes are excluded.
-- [`../SEAMS.md`](../SEAMS.md): conclusions, probe labels, proposed migration
-  waves, intermediate-state risks, and open questions.
+- [Submission seam map](../templates/SEAMS.md): authoritative conclusions,
+  migration waves, intermediate-state risks and open questions.
+- [Discovery log](SEAM_DISCOVERY_LOG.md): detailed probe labels, observations
+  and intermediate implementation history supporting those conclusions.
 - [`LEGACY_CREW_BEHAVIOR.md`](LEGACY_CREW_BEHAVIOR.md): separate wave 1 compatibility
   notes with successful, failing, and unusual behavior linked to individual tests.
 - [`crew-fuzz-report.json`](crew-fuzz-report.json): reproducible fuzz seed, counts,

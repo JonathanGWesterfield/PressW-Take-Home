@@ -1,7 +1,8 @@
 # Seam Map
 
-This is the submission summary; [the root investigation map](../SEAMS.md) contains
-longer probe notes and links. Discovery used public HTTP, the supplied source and
+This is the authoritative submission seam map and wave plan. The supporting
+[discovery log](../investigation/SEAM_DISCOVERY_LOG.md) preserves detailed probes
+and intermediate implementation history. Discovery used public HTTP, the supplied source and
 schema, and Postgres; it did not inspect the Callboard binary/container internals.
 Observations below describe specific experiments, not universal guarantees.
 
@@ -43,13 +44,24 @@ Observations below describe specific experiments, not universal guarantees.
 
 ## Wave plan
 
+The wave boundary follows the experiments: read-only crew retrieval can coexist
+with legacy writes over the same table, while acceptance, confirmation and
+maintenance cannot safely acquire separate owners merely by changing routes.
+Wave 1 therefore keeps shared data and legacy job ownership, accepting a shared
+DB failure domain in exchange for a small, reversible HTTP cutover.
+
 | Wave | What moves (endpoints, behaviors, tables) | Why this is safe to move as a unit |
 | --- | --- | --- |
-| 1 | Org-7 crew list/show reads plus modern list/detail; read existing `tg_crew`. | No new writes, copied state, or maintenance worker. Callboard retains all writers/jobs; next-request reads observe committed shared data. Implemented and verified directly and at ingress; I1 demonstrated actual org-7 cutover/rollback/reapply, and R1 accepted the bounded local result. Remote CI execution and required-check enforcement remain release gates. |
+| 1 | Org-7 crew list/show reads plus modern list/detail; read existing `tg_crew`. | No new writes, copied state, or maintenance worker. Callboard retains all writers/jobs; next-request reads observe committed shared data. Direct, ingress and live cutover/rollback passed; R1 accepted the bounded local result. GitHub's three jobs passed at `31758ea`; required-check/PR enforcement remains disabled. |
 | 2 | Coordinated scheduling slice: crew writes, shift operations/roster, assignment offer/accept, message confirmation, cancellation, and associated background invariants over crew/venues/shifts/assignments/messages/queue. | Keep acceptance entry points and dependent writes under one defined transaction/job owner. Subdivide only after characterizing and preserving those contracts. Not yet proven safe or implemented. |
 | 3 | Remaining manual messaging, delivery/read preferences, and retirement of residual legacy endpoints/jobs/storage. | Move after scheduling producers/consumers have explicit contracts and legacy jobs can be disabled safely. Requires additional discovery. |
 
 ## Cut couplings & mitigations
+
+Wave 2 describes the coupled area needing further characterization, not a demand
+to port every listed endpoint in one change. Before subdividing it, establish
+transaction boundaries, retry behavior and a single job owner, then identify a
+smaller independently reversible slice. No later wave is implemented here.
 
 - **Legacy writer / Encore reader:** org 7's crew update remains on Callboard;
   Encore reads `tg_crew` directly without caches. The isolated gateway suite
@@ -92,8 +104,10 @@ Observations below describe specific experiments, not universal guarantees.
   moves; production org authentication before trusting client-supplied identity.
 - Remaining unrecorded operations and real tenant sizes; the finite recording and
   corpus are not the full production API.
-- Remote CI execution/branch enforcement and candidate-supplied interview timing
-  remain outstanding. [R1](../tasks/R1-independent-review.md) independently
+- Required-check/PR enforcement, private repository sharing, final-revision
+  publication/verification and candidate-supplied interview timing remain
+  outstanding. [GitHub CI and artifact uploads passed at `31758ea`](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976);
+  this is separate from local live rehearsal. [R1](../tasks/R1-independent-review.md) independently
   accepted the bounded local Wave 1 result.
   Direct legacy/Encore, modern and gateway/mixed checks pass; the saved
   [I1 evidence](../investigation/evidence/i1-integration-20261024.jsonl) demonstrates

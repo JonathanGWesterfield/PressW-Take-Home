@@ -7,8 +7,9 @@ Status: implemented Wave 1 design, reconciled with saved verification on
 legacy-write visibility, config-only rollback and final mixed routing.
 [Compact evidence](../investigation/evidence/i1-integration-20261024.jsonl)
 retains both the failed host-publication attempt and corrected rehearsal.
-R1 independently accepted the bounded local Wave 1 result. Remote CI execution
-and required branch checks remain unverified release gates. This document
+R1 independently accepted the bounded local Wave 1 result. All three automatic
+GitHub jobs and evidence uploads passed at `31758ea`; required-check/PR enforcement
+remains disabled at the recorded observation. This document
 separates the implemented decisions, observed local evidence and remaining
 limits.
 
@@ -33,7 +34,7 @@ and reverse engineering.
 
 ## 2. Current evidence and gaps
 
-The [brief](../README.md), [submission seam map](../SEAMS.md), and
+The [brief](../README.md), [submission seam map](SEAMS.md), and
 [crew behavior notes](../investigation/LEGACY_CREW_BEHAVIOR.md) establish the
 scope and contracts. Encore registers modern crew routes from
 `encore/app/main.py` alongside `/healthz`, backed by crew models, repository, and
@@ -194,7 +195,7 @@ and Compose for orchestration. No custom test framework is needed.
 | B. Shared reads and modern API | Repository/service/v3 adapters share tenant-scoped retrieval, with unit and modern HTTP coverage. |
 | C. Legacy wrapper | Both direct backends pass the unchanged corpus; focused parser/serializer tests supplement wire comparisons. |
 | D. Gateway and mixed state | Ingress baseline, canonical org-7 routing, HTTP-write visibility and rollback pass in the isolated gate and I1 deployment rehearsal. |
-| E. Gate and evidence | Named automatic CI jobs and saved local matrix/evidence are implemented. R1 accepts the bounded local result; remote execution/enforcement remain unverified release gates. |
+| E. Gate and evidence | Named automatic CI jobs and saved local matrix/evidence are implemented. R1 accepts the bounded local result; remote jobs/uploads passed at `31758ea`. Required-check/PR enforcement and final-revision publication/verification remain. |
 
 Current commands, from the repo root:
 
@@ -240,10 +241,15 @@ remain in each job. `fail-fast: false` lets all jobs report, command failures se
 job status, and `always()` uploads backend/run/attempt-qualified evidence. Manual
 runs retain the backend selector, including sequential `both`.
 
-Workflow configuration does not prove GitHub execution/upload or enforcement.
-Remote branch rules must require all three named checks and PRs; this work did
-not configure or verify those rules. Reduced pytest selections are investigation,
-not full release evidence.
+[GitHub run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+demonstrates all three automatic jobs and evidence-upload steps succeeding at
+`31758ea`; [recorded metadata](../investigation/evidence/github-actions-20261024.jsonl)
+identifies the three nonexpired artifacts. Later local documentation/IDE changes
+are outside that head SHA; executable application/test/workflow bytes match it.
+This was a push run, not proof of required checks or PR enforcement: GitHub
+reported `main` unprotected. Enable the planned rules separately and verify the
+final published revision. Reduced pytest selections remain investigation rather
+than full release evidence.
 
 ## 7. Migration and rollback runbook
 
@@ -327,8 +333,9 @@ references are in D2 and the compact I1 evidence.
 The local technical acceptance evidence now covers the unchanged direct corpus
 on both backends, the deliberate v3 contract, ingress/mixed routing, immediate
 legacy HTTP-write visibility, read-side DB checks and config-only rollback.
-R1 independently accepted this bounded local technical result. Remote CI
-execution and required-check enforcement are unverified release gates. Known
+R1 independently accepted this bounded local technical result. Remote CI and
+uploads passed for `31758ea`; required-check/PR enforcement and final-revision
+publication/verification remain outstanding. Known
 limits and intentional modern differences are recorded in [scoping](SCOPING.md)
 and [trade-offs](TRADEOFFS.md).
 

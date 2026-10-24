@@ -6,6 +6,51 @@
 
 ---
 
+## Candidate submission
+
+Wave 1 moves org 7's two crew reads to Encore, with modern `/v3` reads sharing
+the same retrieval service. Callboard retains all writes and maintenance. The
+three submission documents live only in `templates/`; filenames in the original
+brief below refer to these authoritative versions:
+
+| Start here | What it explains |
+| --- | --- |
+| [Scoping](templates/SCOPING.md) | What shipped, why two reads came first, assumptions and deliberate cuts. |
+| [Seam map](templates/SEAMS.md) | Observed couplings, evidence, migration waves and what happens in mixed routing. |
+| [Trade-offs and evidence](templates/TRADEOFFS.md) | Design choices, parity results, rollout failure/recovery and remaining limits. |
+
+[Detailed discovery log](investigation/SEAM_DISCOVERY_LOG.md), [implementation design](templates/WAVE1_DESIGN.md),
+[API examples](api-endpoints.md), and [independent acceptance review](tasks/R1-independent-review.md)
+provide supporting detail. The [test guide](tests/README.md) explains reproducible
+verification; the [rollout/rollback runbook](tasks/D2-rollout-configuration.md)
+contains the tested Linux-view route publisher.
+
+```sh
+docker compose up --build -d
+python3 scripts/verify --backend both
+python3 scripts/verify --backend gateway
+```
+
+Verification creates separate disposable test databases. The development routes
+already select Encore for canonical org `7` on crew list/show; modern callers use
+Encore directly at `http://localhost:8092/v3/crew` with `X-Org-Id: 7`.
+
+Local I1 verification passed 1,084 tests per direct backend and 81 in the gateway
+target, including intentional modern differences. [GitHub run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+passed all three automatic jobs and uploaded their evidence at revision `31758ea`.
+Later documentation/IDE commits are outside that run; application, test and workflow
+code match its revision. [Recorded CI metadata](investigation/evidence/github-actions-20261024.jsonl)
+keeps the source revision and observation limits explicit.
+
+Submission actions still remaining: private repository access for the invite
+contacts, candidate-supplied timing/post-window disclosure, publication and CI of
+the final revision, and the planned required-check/PR enforcement. At the recorded
+GitHub observation, the repository was public and `main` was unprotected.
+
+The original assessment brief follows unchanged.
+
+---
+
 ## Before you start
 
 Your window starts when this kit is delivered. The time box is intentionally tight: part of

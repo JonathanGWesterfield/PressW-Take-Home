@@ -165,12 +165,18 @@ all automatic checks passed.
 
 Configure a GitHub branch ruleset for `main` requiring PRs and all three exact
 status check names above, disallowing bypasses/direct pushes as appropriate.
-Workflow execution and branch enforcement are separate: **this task does not
-change or verify remote branch protection**. The workflow has not been executed
-on GitHub as part of this local edit. I1 must still run the full commands against
-the combined implementation and record fresh evidence before final acceptance.
-An isolated green matrix also does not establish that the development route file
-was actually published; the live cutover/rollback rehearsal remains separate.
+Workflow execution and branch enforcement are separate. [Run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+passed all three automatic verification/upload jobs for commit `31758ea`.
+[Recorded CI metadata](../investigation/evidence/github-actions-20261024.jsonl)
+lists the three nonexpired artifacts; their ZIP contents were not downloaded or
+recounted during that metadata check. Later local documentation/IDE commits are
+outside that run, with executable verification code unchanged. GitHub reported
+`main` unprotected; no remote settings were changed. Publish and verify the final
+revision, and configure required checks/PRs separately.
+
+[I1](../tasks/I1-integration-rehearsal.md) completed the full local matrix and
+actual cutover/rollback rehearsal, followed by [R1's independent local acceptance](../tasks/R1-independent-review.md).
+CI does not reproduce the development Colima mount or replace that live evidence.
 
 ## Local pytest and the existing investigation stack
 

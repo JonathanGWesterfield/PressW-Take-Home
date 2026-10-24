@@ -1,13 +1,13 @@
 # R1: independently review the integrated Wave 1 result
 
 - **Owner:** `/root/r1_implementer` (independent review: `/root/r1_reviewer`)
-- **Status:** PASS for bounded local Wave 1; remote CI execution and required-check/PR enforcement remain unverified release gates
+- **Status:** PASS for bounded local Wave 1; later CI/upload success observed at `31758ea`; required-check/PR enforcement disabled
 - **Dependencies:** I1 combined implementation/evidence; coordinate E2 final documents
 - **Last updated:** 2026-10-24; verify current working tree at task start
 
 ## Working context
 
-This is the interview-sized Wave 1 migration in PressW-Take-Home. Move only org 7's legacy crew list/show reads to Encore, with modern v3 reads sharing retrieval. Callboard retains every write and maintenance job against the shared database. Read the [design](../templates/WAVE1_DESIGN.md), [assessment brief](../README.md), [seam map](../SEAMS.md), and [coordination index](README.md). The working tree already contains substantial implementation; inspect it and saved results before making changes. Preserve unrelated edits and frozen corpora.
+This is the interview-sized Wave 1 migration in PressW-Take-Home. Move only org 7's legacy crew list/show reads to Encore, with modern v3 reads sharing retrieval. Callboard retains every write and maintenance job against the shared database. Read the [design](../templates/WAVE1_DESIGN.md), [assessment brief](../README.md), [seam map](../templates/SEAMS.md), and [coordination index](README.md). The working tree already contains substantial implementation; inspect it and saved results before making changes. Preserve unrelated edits and frozen corpora.
 
 ## Ownership
 
@@ -77,6 +77,10 @@ Update this section as work proceeds. Record exact commands/results and artifact
 
 ### Acceptance assessment
 
+The assessment below is R1's original review snapshot. The subsequent dated
+evidence update at the end records CI/upload success without rewriting that
+review's history or claiming required-check enforcement.
+
 | Requirement | Evidence and R1 disposition |
 | --- | --- |
 | Scope and shared reads | Source review confirms only legacy crew list/show for canonical org 7 route to Encore; wrappers and v3 share tenant-scoped retrieval. Writes, maintenance and schema ownership remain Callboard. PASS. |
@@ -114,3 +118,15 @@ Update this section as work proceeds. Record exact commands/results and artifact
   BLOCKER/IMPORTANT implementation finding remains. Its final wording recheck
   approved all eight changed Markdown documents/index, local links and scoped
   `git diff --check`, with no further finding.
+
+### Subsequent GitHub evidence (2026-10-24)
+
+Read-only inspection of [run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+confirms all three automatic verification/upload jobs passed at `31758ea`, with
+three nonexpired artifacts listed. [Recorded metadata](../investigation/evidence/github-actions-20261024.jsonl)
+keeps the remote revision separate from local JUnit counts and live rehearsal.
+Application/test/workflow bytes match that revision; later local documentation
+and IDE commits were not themselves executed by that run. GitHub reported `main`
+unprotected and the repo public. Required-check/PR enforcement, private sharing,
+candidate timing disclosure and final-revision publication/verification remain.
+This update changes no runtime behavior or original R1 verdict.
