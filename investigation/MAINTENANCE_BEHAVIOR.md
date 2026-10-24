@@ -4,7 +4,7 @@ Observation date: 2026-10-24. All human-readable times below are America/Chicago
 
 ## Result
 
-After replaying **all 51 supplied requests covering all 13 recorded method/path pairs**, we captured the database before cleanup, waited without further API writes, and queried it afterward. The visible maintenance transition **removed three ACCEPT queue events and inserted five DIGEST messages**. It changed no existing messages, assignments, crew, venues, or shifts in this interval. In particular, it did not recalculate pay, lead assignments, or open slots, and no additional offers expired.
+After replaying **all 51 supplied requests covering all 13 recorded method/path pairs**, I captured the database before cleanup, waited without further API writes, and queried it afterward. The visible maintenance transition **removed three ACCEPT queue events and inserted five DIGEST messages**. It changed no existing messages, assignments, crew, venues, or shifts in this interval. In particular, it did not recalculate pay, lead assignments, or open slots, and no additional offers expired.
 
 This is an observed behavioral description of the black box, not recovered source code. The earlier investigation separately observed old-offer expiry; a quiet or already-clean database is not a reason to assume maintenance has stopped.
 

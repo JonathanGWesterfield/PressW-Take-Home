@@ -14,8 +14,8 @@
   interpolation. Separate adapters preserve legacy wire quirks while v3 uses
   positive ASCII-decimal IDs, page sizes 1–100, 422 validation, common missing/
   foreign 404s, nullable two-decimal money strings and boolean lead flags. Preferences remain
-  raw text because some stored values are invalid JSON; we do not silently repair it.
-- **What we'd do next with more time:** finish private sharing, timing disclosure
+  raw text because some stored values are invalid JSON; I do not silently repair it.
+- **What I'd do next with more time:** finish private sharing, timing disclosure
   and final-revision publication/verification; enable required PRs and the three
   named checks. Before moving writers, characterize acceptance/confirmation/
   cancellation transactions, contention, expiry, digest recipients and worker
@@ -35,17 +35,17 @@
   start. The candidate must supply actual timing and label post-window work
   before submission; Git timestamps do not establish that classification.
 
-## Why we took this path
+## Why I took this path
 
-We investigated before choosing the wave: offers, acceptance, confirmation,
-cancellation and maintenance crossed table boundaries. We then froze **171 original
+I investigated before choosing the wave: offers, acceptance, confirmation,
+cancellation and maintenance crossed table boundaries. I then froze **171 original
 and 828 fuzz responses before porting**. The same independent expectations run
 against legacy and Encore, so a cleaner but incompatible wrapper cannot pass by
 changing its own oracle. Parser errors, nulls, pagination and HTTP-200 failures
 are preserved, not repaired.
 
 Direct parity alone did not establish frontend parity: the gateway normalizes
-some inputs and handles methods differently. We therefore tested ingress against
+some inputs and handles methods differently. I therefore tested ingress against
 its own all-legacy baseline, asserted the selected backend, made a real legacy
 HTTP update and checked subsequent Encore reads, then rehearsed rollback. Keeping
 one writer/job owner made that rollback a routing operation without reverse data

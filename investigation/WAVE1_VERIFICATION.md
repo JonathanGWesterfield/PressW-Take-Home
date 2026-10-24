@@ -5,7 +5,7 @@ Local integration, development deployment and GitHub execution are separate obse
 
 ## Observed GitHub execution
 
-On 2026-10-24 we inspected [run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
+On 2026-10-24 I inspected [run 40125062976](https://github.com/JonathanGWesterfield/PressW-Take-Home/actions/runs/40125062976)
 through the GitHub API. At commit `31758eac019839c4ef39b17fbf20bad20f83fd44`,
 **Direct legacy and modern**, **Direct Encore and modern**, and **Gateway ingress
 and mixed routing** all completed successfully, including their verification
@@ -14,7 +14,7 @@ and upload steps. Three nonexpired artifacts were listed, named
 [Recorded metadata](../investigation/evidence/github-actions-20261024.jsonl)
 preserves run/job/artifact identities and the observation time.
 
-We verified job and artifact metadata, without downloading/recounting the remote
+I verified job and artifact metadata, without downloading/recounting the remote
 JUnit payloads. The exact counts below come from local I1 reports. Later local
 changes are documentation/IDE files; application, executable tests, fixtures,
 runner and workflow code match the CI revision. This does not label later commits

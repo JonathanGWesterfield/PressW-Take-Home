@@ -1,10 +1,10 @@
 # Scoping
 
-We chose the first wave from observed coupling, rather than endpoint names.
+I chose the first wave from observed coupling, rather than endpoint names.
 Acceptance, confirmation, cancellation and maintenance share scheduling/message
-state; crew list/show only read existing crew data in our probes. We froze their
+state; crew list/show only read existing crew data in my probes. I froze their
 wire behavior before implementing Encore, then used the same tests against both
-backends. Two reads gave us a complete migration and rollback boundary without
+backends. Two reads gave me a complete migration and rollback boundary without
 transferring a writer or background job. [The seam map](SEAMS.md) gives the
 observations behind that decision.
 
