@@ -1,0 +1,7 @@
+pytest>=8.0
+httpx>=0.27
+# Used to import the gateway for isolated routing tests.
+fastapi>=0.115
+pyyaml>=6.0
+hypothesis==6.142.4
+psycopg[binary]==3.2.12
