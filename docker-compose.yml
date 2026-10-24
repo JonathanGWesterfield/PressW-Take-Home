@@ -6,9 +6,9 @@
 # locally. Works on both Apple silicon and x86 (the image is multi-arch).
 #
 # Ports on your machine:
-#   8080  gateway (all traffic should go through here)
+#   8080  gateway (legacy frontend traffic)
 #   8091  callboard direct (legacy black box - probing it directly is fine)
-#   8092  encore direct (your service)
+#   8092  encore direct (modern /v3/crew clients)
 #   5432  postgres (fully open: showcall/showcall, db "showcall")
 #
 # Reset to a pristine database at any time:  docker compose down -v && docker compose up -d
@@ -56,9 +56,11 @@ services:
     environment:
       CALLBOARD_URL: http://callboard:8080
       ENCORE_URL: http://encore:8080
-      ROUTES_FILE: /srv/routes.yaml
+      ROUTES_FILE: /srv/routes/routes.yaml
     volumes:
-      - ./proxy/routes.yaml:/srv/routes.yaml:ro
+      # A directory bind preserves atomic route-file replacement.  The gateway
+      # reads the contained file on each request; this mount remains read-only.
+      - ./proxy:/srv/routes:ro
     ports:
       - "8080:8080"
     depends_on:

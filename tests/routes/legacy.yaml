@@ -1,0 +1,3 @@
+routes:
+  "/callboard/":
+    default: callboard

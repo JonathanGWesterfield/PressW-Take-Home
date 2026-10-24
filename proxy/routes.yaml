@@ -7,12 +7,23 @@
 # This file is re-read on every request. Migrating a route for an org is an edit
 # here; so is rolling it back.
 #
-# Example — org 7's crew endpoints served by Encore, everyone else stays on legacy:
+# Prepared org-7 target: tests/routes/mixed-org7.yaml. Only these read
+# prefixes move; crew/update, other orgs, scheduling and messaging stay legacy.
+# Keys are exact header strings: use quoted "7", not "07" or padded values.
 #
-#   "/callboard/crew/":
+#   "/callboard/crew/list":
 #     default: callboard
 #     orgs:
-#       7: encore
+#       "7": encore
+#   "/callboard/crew/show":
+#     default: callboard
+#     orgs:
+#       "7": encore
+#
+# Keep this effective table all-legacy until the coordinated I1 rehearsal.
+# Publish validated files by atomic rename in this directory; see tasks/D2-rollout-configuration.md.
+# Modern /v3/crew clients use Encore directly on port 8092. This gateway
+# table intentionally has no /v3 override; legacy rollback cannot serve v3.
 
 routes:
   "/callboard/":

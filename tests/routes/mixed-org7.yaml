@@ -1,0 +1,11 @@
+routes:
+  "/callboard/":
+    default: callboard
+  "/callboard/crew/list":
+    default: callboard
+    orgs:
+      "7": encore
+  "/callboard/crew/show":
+    default: callboard
+    orgs:
+      "7": encore
