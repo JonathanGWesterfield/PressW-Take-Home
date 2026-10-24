@@ -9,7 +9,8 @@
   visibility, read-side database invariants, and config-only rollback in an
   isolated stack. I1 also demonstrated actual org-7 cutover, rollback and final
   Encore reapply with the same gateway instance, after correcting a failed
-  publication attempt. Final integrated R1 review remains pending.
+  publication attempt. R1 independently accepts the bounded local Wave 1
+  result; remote CI execution and required-check enforcement remain unverified.
 - **Specific trade-offs and why:** two reads over shared `tg_crew` avoid a
   second writer, replication and job handoff. One ordered query plus in-memory
   pagination keeps page/total aligned at fixture scale with O(tenant crew count)
@@ -22,10 +23,9 @@
   JSON). It rejects duplicate/unknown parameters and duplicate tenant headers.
   No new authentication or preferences cleanup is implied. AI-assisted discovery,
   implementation and review were used, as permitted by the brief.
-- **What you'd do next with more time:** complete R1's integrated review and
-  reconcile any corrections before declaring the wave complete. Retain the I1
-  rollout/recovery evidence and corrected deployment publisher.
-  Run the three checks on GitHub and configure required PR checks for `main`:
+- **What you'd do next with more time:** retain the I1 rollout/recovery evidence
+  and corrected deployment publisher, then run the three checks on GitHub and
+  configure required PR checks for `main`:
   **Direct legacy and modern**, **Direct Encore and modern**, and **Gateway
   ingress and mixed routing**. Workflow YAML alone does not enforce them.
   Later waves need acceptance/confirmation/cancellation transaction ownership,
@@ -80,7 +80,8 @@ checks; gateway mode selects its ingress/mixed suite plus units, smoke and
 modern checks. Frozen response files are not changed to accommodate Encore.
 See [test instructions](../tests/README.md), [I1](../tasks/I1-integration-rehearsal.md)
 for live artifacts and final state, and [R1](../tasks/R1-independent-review.md)
-for the pending integrated verdict. E2's document review is not R1 approval.
+for the independent local acceptance verdict. E2's document review is not R1
+approval.
 
 The compact [I1 evidence](../investigation/evidence/i1-integration-20261024.jsonl)
 records the failed publication, correction, full gate identities, live routing
@@ -95,4 +96,5 @@ cutover, rollback and reapply. The active route table selects Encore only for
 canonical org `7` on the two read prefixes; all writes/jobs stay legacy. Use the
 corrected `publish_d2_routes` procedure in [D2](../tasks/D2-rollout-configuration.md)
 to publish `tests/routes/legacy.yaml` for rollback, without restart. Modern
-clients remain direct Encore. Final R1 review and remote enforcement are pending.
+clients remain direct Encore. R1 accepted the bounded local result; remote
+enforcement remains pending.

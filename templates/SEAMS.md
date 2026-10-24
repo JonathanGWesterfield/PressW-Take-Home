@@ -45,7 +45,7 @@ Observations below describe specific experiments, not universal guarantees.
 
 | Wave | What moves (endpoints, behaviors, tables) | Why this is safe to move as a unit |
 | --- | --- | --- |
-| 1 | Org-7 crew list/show reads plus modern list/detail; read existing `tg_crew`. | No new writes, copied state, or maintenance worker. Callboard retains all writers/jobs; next-request reads observe committed shared data. Implemented and verified directly and at ingress; I1 demonstrated actual org-7 cutover/rollback/reapply. Final integrated R1 review remains pending. |
+| 1 | Org-7 crew list/show reads plus modern list/detail; read existing `tg_crew`. | No new writes, copied state, or maintenance worker. Callboard retains all writers/jobs; next-request reads observe committed shared data. Implemented and verified directly and at ingress; I1 demonstrated actual org-7 cutover/rollback/reapply, and R1 accepted the bounded local result. Remote CI execution and required-check enforcement remain release gates. |
 | 2 | Coordinated scheduling slice: crew writes, shift operations/roster, assignment offer/accept, message confirmation, cancellation, and associated background invariants over crew/venues/shifts/assignments/messages/queue. | Keep acceptance entry points and dependent writes under one defined transaction/job owner. Subdivide only after characterizing and preserving those contracts. Not yet proven safe or implemented. |
 | 3 | Remaining manual messaging, delivery/read preferences, and retirement of residual legacy endpoints/jobs/storage. | Move after scheduling producers/consumers have explicit contracts and legacy jobs can be disabled safely. Requires additional discovery. |
 
@@ -92,8 +92,9 @@ Observations below describe specific experiments, not universal guarantees.
   moves; production org authentication before trusting client-supplied identity.
 - Remaining unrecorded operations and real tenant sizes; the finite recording and
   corpus are not the full production API.
-- [R1](../tasks/R1-independent-review.md) integrated review, remote CI execution/branch
-  enforcement and candidate-supplied interview timing remain outstanding.
+- Remote CI execution/branch enforcement and candidate-supplied interview timing
+  remain outstanding. [R1](../tasks/R1-independent-review.md) independently
+  accepted the bounded local Wave 1 result.
   Direct legacy/Encore, modern and gateway/mixed checks pass; the saved
   [I1 evidence](../investigation/evidence/i1-integration-20261024.jsonl) demonstrates
   actual cutover/rollback/reapply after a corrected publication failure.

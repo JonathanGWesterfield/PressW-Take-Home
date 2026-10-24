@@ -2,7 +2,9 @@
 
 Evidence snapshot: 2026-10-24, through I1 commit `05bd1c0`. Direct/gateway
 verification, actual cutover/rollback evidence, and the final org-7 route
-configuration are saved and committed; final integrated R1 review remains pending.
+configuration are saved and committed. R1 independently accepts the bounded
+local Wave 1 result; remote CI execution and required-check enforcement remain
+unverified release gates.
 See [current evidence](TRADEOFFS.md) and [I1](../tasks/I1-integration-rehearsal.md).
 
 - **Scope committed:** two read operations, initially for org 7:
@@ -15,7 +17,8 @@ See [current evidence](TRADEOFFS.md) and [I1](../tasks/I1-integration-rehearsal.
   `4ff8a3c` and passes the unchanged direct corpus. I1 (`05bd1c0`) demonstrated both reads
   moving to Encore, rolling back to Callboard and returning to Encore on the
   same gateway instance. The active configuration leaves canonical org 7
-  on Encore for those two prefixes; final integrated R1 review is outstanding.
+  on Encore for those two prefixes; R1 independently accepts this bounded local
+  result, while remote release enforcement remains outstanding.
 - **Scope cut:** no crew or scheduling/message writes, schema changes, data
   copy, cache, or Encore maintenance worker. Acceptance, confirmation,
   cancellation, queue draining, and digests share state across tables and
@@ -36,8 +39,8 @@ See [current evidence](TRADEOFFS.md) and [I1](../tasks/I1-integration-rehearsal.
   selection and exact org strings remain unchanged: `07` can stay legacy while
   `7` migrates, and suffixes of the two prefixes also reach the wrapper.
   Modern clients use Encore directly on port 8092; the rollout adds no gateway
-  `/v3` route. Moving only reads avoids a reverse data migration, but final
-  release still requires the final integrated review. The first live route
+  `/v3` route. Moving only reads avoids a reverse data migration, but release
+  still requires remote CI execution and required-check enforcement. The first live route
   publisher caused errors on the Mac/Colima share; a corrected Linux-view
   publisher passed sampled cutover/rollback checks. Remote CI execution/branch
   protection and the interview delivery

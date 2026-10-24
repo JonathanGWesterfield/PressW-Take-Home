@@ -4,19 +4,19 @@ Each agent receives one task file and records its progress, evidence, and handof
 
 ## Status and dependencies
 
-Initial snapshot: 2026-10-24, HEAD `b557934`, with implementation actively changing in the working tree. A (reference preservation) and B (shared reads/v3, commit `69438b9`) are complete. C (legacy wrappers) has passed direct parity/review but is uncommitted. D/E are in progress. Inspect current files and evidence before changing anything; task checkboxes below are not assertions that existing work is absent.
+Current coordination snapshot: 2026-10-24, after `2f52b24`. Shared reads/v3 (`69438b9`), legacy wrappers/verification support (`4ff8a3c`), gateway acceptance (`b1716ae`), named CI gates (`c46b810`), actual rollout/recovery (`05bd1c0`), and E2 submission documents (`2f52b24`) are committed. I1 and E2 independently passed their scoped reviews. R1 independently passed the bounded local implementation and its documentation correction loop; remote CI execution and required-check enforcement remain unverified release gates. Inspect current files and evidence before changing anything.
 
 | Task | Starting state | Dependencies | Output |
 | --- | --- | --- | --- |
-| [D1: gateway acceptance](D1-gateway-acceptance.md) | Complete; implementer and independent reviewer each passed 81 tests | I1 combined acceptance and actual rollout remain | Gateway contract, mixed routing, HTTP-write visibility, full-matrix rollback and scoped DB evidence |
-| [D2: rollout configuration](D2-rollout-configuration.md) | Prepared and independently reviewed; bounded checks pass | I1 live mount, cutover and rollback rehearsal pending | Reviewed directory mount, stable route fixtures and atomic publication runbook |
-| [E1: verification gate](E1-verification-gate.md) | Implemented and independently reviewed; local checks pass | I1 combined runs and GitHub execution remain unverified | Three named CI checks covering direct backends, modern API and ingress |
-| [E2: submission documents](E2-submission-documents.md) | Reconciled with saved I1 evidence; independently reviewed | R1 verdict and interview timing remain distinct | Accurate scoping, tradeoffs, seams, rollout/recovery evidence and limitations |
+| [D1: gateway acceptance](D1-gateway-acceptance.md) | Complete; implementer and independent reviewer each passed 81 tests | I1 combined acceptance and actual rollout passed; R1 local review passed | Gateway contract, mixed routing, HTTP-write visibility, full-matrix rollback and scoped DB evidence |
+| [D2: rollout configuration](D2-rollout-configuration.md) | Preparation reviewed; I1 corrected publisher and passed live rehearsal | R1 local review passed; deployment sampling remains bounded | Reviewed directory mount, stable route fixtures and atomic publication runbook |
+| [E1: verification gate](E1-verification-gate.md) | Implemented and independently reviewed; local checks pass | I1 combined local runs passed; GitHub execution/enforcement remain unverified | Three named CI checks covering direct backends, modern API and ingress |
+| [E2: submission documents](E2-submission-documents.md) | Reconciled with saved I1 evidence; independently reviewed | R1 local verdict incorporated; interview timing remains candidate-owned | Accurate scoping, tradeoffs, seams, rollout/recovery evidence and limitations |
 | [E3: design reconciliation](E3-design-reconciliation.md) | Complete and independently reviewed | R1 integrated verdict remains separate | Design aligned with delivered code, CI and corrected I1 publication evidence |
-| [I1: integration and live rehearsal](I1-integration-rehearsal.md) | Complete and independently reviewed; full matrix and live rehearsal pass | R1 whole-system review and E2 final documents remain | Org-7 cutover, config-only rollback, final mixed routing and recorded evidence |
-| [R1: independent review](R1-independent-review.md) | Final combined review pending | I1; review E2 draft alongside final evidence | Findings, correction loop and final verdict |
+| [I1: integration and live rehearsal](I1-integration-rehearsal.md) | Complete and independently reviewed; full matrix and live rehearsal pass | E2 reconciled; R1 local review passed | Org-7 cutover, config-only rollback, final mixed routing and recorded evidence |
+| [R1: independent review](R1-independent-review.md) | Complete: local PASS after implementer/reviewer correction loop | Remote CI execution/artifact upload and required-check/PR enforcement remain unverified | Findings, correction loop and final verdict |
 
-D1, D2 and E1 can run concurrently with one coordinator. Start E2 as a slot becomes available and interfaces stabilize. I1 owns the combined run and changes to the shared running stack. R1 reviews the integrated result and sends findings back to each owner; E2 is finalized with that verdict.
+D1, D2 and E1 ran as separate workstreams; I1 completed the combined runs and shared-stack rehearsal. E2 reconciled the submission documents with I1 evidence. R1 reviewed the integrated result through an implementer/reviewer correction loop; its local PASS and outstanding remote release gates are incorporated in E2. I1 retains ownership of any further shared-stack operations.
 
 ## Coordination rules
 

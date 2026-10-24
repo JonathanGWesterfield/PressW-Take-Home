@@ -129,6 +129,10 @@ Use `python3 scripts/verify --backend both` to run the identical full suite agai
 legacy and then Encore, with a separate fresh database/report for each. Both runs
 execute all cases by default and neither records replacement expectations.
 
-That parity run is expected to fail until wrappers are implemented. Passing this
-legacy run establishes a repeatable reference; it does not yet establish Encore
-parity, production authentication, or exhaustive behavior for all possible inputs.
+The final isolated `python3 scripts/verify --backend both` run passed this
+unchanged direct contract against legacy and Encore in separately seeded stacks:
+1,084 testcase elements per backend (1,097 in JUnit's suite counter because it
+also counts 13 unittest subtests). This establishes bounded direct-wrapper
+compatibility for the frozen corpus; the gateway ingress/cutover contract is
+verified separately. It does not establish production authentication or
+exhaustive behavior for all possible inputs.

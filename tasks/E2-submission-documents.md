@@ -84,3 +84,13 @@ Update this section as work proceeds. Record exact commands/results and artifact
 
 - After the approved document review, I1 was committed as `05bd1c0`. Refreshed the submission snapshot/commit-state wording to reflect that commit; the underlying verified results and R1 limitations are unchanged.
 - Package also includes the previously created task index, R1 task scaffold and template index pointer so all linked documentation is present in a fresh checkout. No implementation or runtime changes are included.
+
+### Post-R1 reconciliation
+
+- R1 independently accepted the bounded local Wave 1 result after source/hash,
+  frozen-corpus, report and configuration review plus a fresh 65-test unit
+  subset. It found and corrected only stale documentation claims; no application
+  or test-contract defect was found.
+- The submission templates now state that remote GitHub execution and required
+  branch-check/PR enforcement remain unverified release gates. Candidate-supplied
+  interview timing also remains outside repository evidence.

@@ -7,9 +7,10 @@ Status: implemented Wave 1 design, reconciled with saved verification on
 legacy-write visibility, config-only rollback and final mixed routing.
 [Compact evidence](../investigation/evidence/i1-integration-20261024.jsonl)
 retains both the failed host-publication attempt and corrected rehearsal.
-Integrated R1 review remains separately owned; remote CI execution and required
-branch checks are unverified. This document separates the implemented decisions,
-observed local evidence and remaining limits.
+R1 independently accepted the bounded local Wave 1 result. Remote CI execution
+and required branch checks remain unverified release gates. This document
+separates the implemented decisions, observed local evidence and remaining
+limits.
 
 ## 1. Goal and boundary
 
@@ -193,7 +194,7 @@ and Compose for orchestration. No custom test framework is needed.
 | B. Shared reads and modern API | Repository/service/v3 adapters share tenant-scoped retrieval, with unit and modern HTTP coverage. |
 | C. Legacy wrapper | Both direct backends pass the unchanged corpus; focused parser/serializer tests supplement wire comparisons. |
 | D. Gateway and mixed state | Ingress baseline, canonical org-7 routing, HTTP-write visibility and rollback pass in the isolated gate and I1 deployment rehearsal. |
-| E. Gate and evidence | Named automatic CI jobs and saved local matrix/evidence are implemented. Remote execution/enforcement and separately owned integrated R1 remain unverified. |
+| E. Gate and evidence | Named automatic CI jobs and saved local matrix/evidence are implemented. R1 accepts the bounded local result; remote execution/enforcement remain unverified release gates. |
 
 Current commands, from the repo root:
 
@@ -326,10 +327,10 @@ references are in D2 and the compact I1 evidence.
 The local technical acceptance evidence now covers the unchanged direct corpus
 on both backends, the deliberate v3 contract, ingress/mixed routing, immediate
 legacy HTTP-write visibility, read-side DB checks and config-only rollback.
-Integrated R1 remains a separate review; no verdict is inferred here. Remote CI
-execution and required-check enforcement are also unverified. Known limits and
-intentional modern differences are recorded in [scoping](SCOPING.md) and
-[trade-offs](TRADEOFFS.md).
+R1 independently accepted this bounded local technical result. Remote CI
+execution and required-check enforcement are unverified release gates. Known
+limits and intentional modern differences are recorded in [scoping](SCOPING.md)
+and [trade-offs](TRADEOFFS.md).
 
 Principal risks are raw HTTP normalization, leaked driver error text, accidental
 tenant omission, broad prefix cutover, and false confidence from a green legacy
