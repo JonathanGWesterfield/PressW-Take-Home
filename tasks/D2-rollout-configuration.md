@@ -84,40 +84,57 @@ Run from the repository root. Commands below are prepared for I1; D2 did not exe
 
    These response captures support live investigation; HTTP 200 alone is not parity or business-success proof. I1 owns controlled write visibility, exact response/header comparisons and scoped DB checks. Crew 2 is seeded org 7, not a disposable new record.
 
-3. Define a validated atomic publisher in the same shell. It validates allowed shape/backends, writes/fsyncs a temporary file **inside `proxy/`**, then atomically replaces `routes.yaml`; it never truncates the live file in place:
+3. Define this validated publisher in the same shell. **I1 deployment correction:** host-side `os.replace` on this Mac/Colima share exposed a transient missing route file inside the gateway. Use the same Linux filesystem view as the gateway: a disposable publisher container with only the route directory writable. The gateway's own mount stays read-only; no persistent publisher or network access is added. Validate the candidate inside the publisher, write/fsync a temporary file inside the mounted directory, then atomically replace the target and read it back. This supersedes the original host-side publisher for this deployment. I1 must observe repeated requests during publication and rollback, rather than treating eventual recovery as zero disruption.
 
    ```sh
    publish_d2_routes() {
      .venv/bin/python - "$1" <<'PY'
-   import os
+   from pathlib import Path
+   import subprocess
+   import sys
+   import uuid
+   payload = Path(sys.argv[1]).read_bytes()
+   image = subprocess.check_output(['docker', 'compose', 'images', '-q', 'gateway'], text=True).strip()
+   assert image, 'Prepare/build the gateway image first'
+   code = r"""import os
    from pathlib import Path
    import sys
    import tempfile
    import yaml
-   payload = Path(sys.argv[1]).read_bytes()
+   payload = sys.stdin.buffer.read()
    table = yaml.safe_load(payload)
-   assert isinstance(table, dict) and set(table) == {"routes"}
-   assert isinstance(table["routes"], dict) and table["routes"]
-   for prefix, rule in table["routes"].items():
-       assert isinstance(prefix, str) and prefix.startswith("/")
-       assert isinstance(rule, dict) and set(rule) <= {"default", "orgs"}
-       assert rule.get("default") in {"callboard", "encore"}
-       orgs = rule.get("orgs", {})
+   assert isinstance(table, dict) and set(table) == {'routes'}
+   assert isinstance(table['routes'], dict) and table['routes']
+   for prefix, rule in table['routes'].items():
+       assert isinstance(prefix, str) and prefix.startswith('/')
+       assert isinstance(rule, dict) and set(rule) <= {'default', 'orgs'}
+       assert rule.get('default') in {'callboard', 'encore'}
+       orgs = rule.get('orgs', {})
        assert isinstance(orgs, dict)
-       assert all(isinstance(org, str) and backend in {"callboard", "encore"} for org, backend in orgs.items())
-   target = Path("proxy/routes.yaml")
+       assert all(isinstance(org, str) and backend in {'callboard', 'encore'} for org, backend in orgs.items())
+   target = Path('/routes/routes.yaml')
+   original_stat = target.stat()
    temporary = None
    try:
-       with tempfile.NamedTemporaryFile(dir=target.parent, prefix=".routes-", suffix=".yaml", delete=False) as stream:
+       with tempfile.NamedTemporaryFile(dir=target.parent, prefix='.routes-i1-', delete=False) as stream:
            temporary = Path(stream.name)
            stream.write(payload)
            stream.flush()
            os.fsync(stream.fileno())
-       os.chmod(temporary, 0o644)
+       os.chmod(temporary, original_stat.st_mode & 0o777)
+       os.chown(temporary, original_stat.st_uid, original_stat.st_gid)
        os.replace(temporary, target)
+       assert target.read_bytes() == payload
    finally:
        if temporary is not None:
            temporary.unlink(missing_ok=True)
+   """
+   subprocess.run([
+       'docker', 'run', '--rm', '-i', '--name', 'route-publisher-' + uuid.uuid4().hex[:12],
+       '--network', 'none', '--read-only',
+       '--mount', f'type=bind,src={Path("proxy").resolve()},dst=/routes',
+       image, 'python', '-c', code,
+   ], input=payload, check=True)
    PY
    }
    ```
@@ -132,7 +149,7 @@ Run from the repository root. Commands below are prepared for I1; D2 did not exe
 - Fresh `docker compose config --quiet` → exit 0 (configuration validation only; no services started/restarted).
 - Fresh `.venv/bin/python -m pytest tests/unit/test_gateway_routing.py tests/unit/test_verification_runner.py -q` → **25 passed in 0.30s**. Covers actual selector boundaries, atomic rename reload, first duplicate-header routing, directory-mount configuration, owned runner cleanup/status semantics. No containers or network requests.
 - Fresh bounded `.venv/bin/python` inline assertions loaded both fixtures and the actual `proxy/app.py` selector with a stub HTTP client: **98 decisions passed** (two fixture states × seven paths × seven org/header states). Verified canonical `7` only, both read prefixes/suffixes, nonmigrated writes and modern gateway fallback. Structural assertions require exactly the existing three mixed prefixes and canonical quoted-org overrides; no fixture edit was needed.
-- Extracted the `publish_d2_routes` shell function verbatim from this task record and ran it via `bash -c` in a temporary directory containing a fake `proxy/` target: mixed cutover bytes matched, rollback restored exact original bytes, invalid backend was rejected with target unchanged, and no temporary publisher file remained. This tests the documented file operation, **not** the live mount or live gateway reload.
+- Historical D2 check (before I1 deployment correction): extracted the original host-side `publish_d2_routes` shell function verbatim from this task record and ran it via `bash -c` in a temporary directory containing a fake `proxy/` target: mixed cutover bytes matched, rollback restored exact original bytes, invalid backend was rejected with target unchanged, and no temporary publisher file remained. This tests the documented file operation, **not** the live mount or live gateway reload.
 - `git diff --check -- docker-compose.yml proxy/routes.yaml tasks/D2-rollout-configuration.md tests/routes` → exit 0.
 - No live route changes, restart, database reset, full matrix, cutover or rollback were performed by D2. I1 still must prove the actual deployment mount, routing responses and stable gateway instance. No fresh live artifact exists from this configuration task.
 
@@ -140,6 +157,7 @@ Run from the repository root. Commands below are prepared for I1; D2 did not exe
 
 | Finding / source | Correction | Recheck / disposition |
 | --- | --- | --- |
+| I1 live deployment: host-side rename produced transient missing-file 500s on Colima. | Superseded host publisher with clone-visible one-shot Linux-view publisher; gateway mount remains read-only. | I1 temporary concurrency test and corrected live rehearsal pass; see I1 evidence for failure/retry provenance. |
 | Coordinator pre-review: unsafe example and precise publication prerequisites. | Replaced broad crew example with both canonical read prefixes, linked the exact task path, guarded backup against unrelated rule fields, and left final deployment state to I1. | Scoped whitespace and effective all-legacy YAML assertions passed. |
 | `/root/e1_reviewer`: independent implementation/runbook review. | No new actionable findings. | Approved after Compose config, 25 focused tests (0.33s), and independent extracted-publisher cutover/exact rollback/invalid-backend/unknown-field rejection + cleanup checks. Live mount/reload/rehearsal remains I1 work. |
 
