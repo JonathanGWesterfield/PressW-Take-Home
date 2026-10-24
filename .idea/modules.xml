@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/encore.iml" filepath="$PROJECT_DIR$/.idea/encore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pressw-llc-be-engineering-assessment-58be5ec5a0a97628f932968bdcef83f2498105bb.iml" filepath="$PROJECT_DIR$/.idea/pressw-llc-be-engineering-assessment-58be5ec5a0a97628f932968bdcef83f2498105bb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/showcall-proxy.iml" filepath="$PROJECT_DIR$/.idea/showcall-proxy.iml" />
+    </modules>
+  </component>
+</project>
