@@ -35,9 +35,9 @@ services:
     environment:
       CALLBOARD_URL: http://callboard:8080
       ENCORE_URL: http://encore:8080
-      ROUTES_FILE: /srv/test-routes.yaml
+      ROUTES_FILE: /srv/routes/routes.yaml
     volumes:
-      - ./routes.yaml:/srv/test-routes.yaml:ro
+      - route_state:/srv/routes:ro
     depends_on: [callboard, encore]
   tests:
     build:
@@ -53,3 +53,6 @@ services:
       PYTHONDONTWRITEBYTECODE: "1"
     volumes:
       - ${SHOWCALL_REPORT_DIR:?Set by scripts/verify}:/reports
+      - route_state:/routes
+volumes:
+  route_state:

@@ -156,9 +156,10 @@ What changes in implementation and acceptance:
    Source inspection shows org matching is exact string comparison, whereas legacy
    org parsing accepts some padded/leading-zero values; those variants can remain
    on legacy under the supplied table. Do not normalize them as an unreviewed
-   routing change. `tests/routes.yaml` deliberately sends the whole crew prefix
-   and every org to Encore for contract verification; that is not the production
-   wave 1 table and does not prove that crew/update or other orgs stay on legacy.
+   routing change. The earlier `tests/routes.yaml` sent the whole crew prefix
+   and every org to Encore, which did not prove that crew/update or other orgs
+   stayed legacy. Slice D replaces it with the actual two-prefix/org-7 fixture
+   and explicit mixed-routing assertions.
 
 Exit conditions before declaring wave 1 complete:
 
@@ -178,10 +179,10 @@ Exit conditions before declaring wave 1 complete:
   writeups. Later-wave expiry/digest/concurrency questions do not need to be solved
   to move these reads, but remain blockers for transferring those write/job owners.
 
-## Wave 1 implementation progress: slices A and B
+## Wave 1 implementation progress: slices A through C
 
 The [design's implementation sequence](templates/WAVE1_DESIGN.md#6-implementation-slices-and-verification)
-has reached **B: shared reads and modern API**. Reference preservation (A) was
+has reached **C: legacy read wrappers**. Reference preservation (A) was
 rechecked before code changes: the full legacy gate passed 1,028 tests, and both
 frozen corpus hashes plus the fixture hash were recorded in
 [`wave1-reference-manifest.jsonl`](investigation/evidence/wave1-reference-manifest.jsonl).
@@ -208,8 +209,56 @@ responses against an isolated live stack. Final reports are local under
 `test-results/showcall-verify-d7d93063d69f/` (independent review); the manifest
 retains their identities and reference checksums.
 
-**Wave 1 migration is still incomplete.** Slice C must implement the original
-`/callboard/...` wrappers and pass the unchanged corpus against Encore. Slice D
+Slice B is committed as `69438b9`. Slice C adds the original
+`/callboard/crew/list` and `/callboard/crew/show` wrappers over the same retrieval
+service. The compatibility dispatcher preserves raw query/header handling,
+first-value semantics, org/error precedence, legacy pagination, JSON bytes,
+HEAD/OPTIONS behavior, and direct 308 redirects. Detail IDs remain bound text
+cast by PostgreSQL inside a tenant-scoped query. Failed conversions roll back
+and close the session; unrelated operational failures are not fabricated as
+invalid-ID responses. The async middleware dispatches synchronous DB work to a
+thread pool.
+
+The implementer's final `python3 scripts/verify --backend both` run passed
+**1,071 pytest tests per backend**, including the unchanged original/fuzz corpus
+and modern regressions. Its isolated reports are
+`test-results/showcall-verify-dd5a1d88e95a/` (legacy) and
+`test-results/showcall-verify-fd47fbf799df/` (Encore). The test runner now names
+`tests/` explicitly: otherwise the backend value `encore` can be mistaken for
+the existing source directory during early pytest plugin discovery. New public
+Callboard probes also established additional org-header and HTML-escaping quirks;
+their source evidence and focused regression coverage are described in the
+[behavior notes](investigation/LEGACY_CREW_BEHAVIOR.md#slice-c-follow-up-observations-2026-10-24).
+The frozen corpus and fixture hashes remain unchanged.
+
+Independent Slice C review **passed** against the design, assessment README,
+this seam map, and the behavior evidence. The reviewer repeated the full
+`--backend both` gate with **1,071 passing tests per backend** in
+`test-results/showcall-verify-800089ad574d/` (legacy) and
+`test-results/showcall-verify-a8cea30df596/` (Encore), with no failures, errors,
+or skips. Direct live comparisons also matched the four new source observations
+and a successful detail response byte-for-byte with identical Host input. All
+isolated verification stacks were cleaned up. JUnit's suite counter includes
+13 unittest subtests in addition to the 1,071 testcase elements; the manifest
+records both counts. These results establish bounded direct-wrapper parity,
+not ingress or customer-cutover acceptance.
+
+Slice D's prepared implementation passed independent isolated gates:
+`showcall-verify-c4a13cf8347d` (legacy, 1,076 pytest tests),
+`showcall-verify-f61f993f62e1` (Encore, 1,076), and
+`showcall-verify-79d7851d1749` (gateway, 73), with no failures/errors/skips.
+Subsequent parallel D1 work expanded gateway coverage and independently passed
+81 tests in `showcall-verify-ee1b1f804be9`; I1 must run the combined final tree.
+The original 14-case gateway source observations are retained in
+[`slice-d-original-gateway-20261024.jsonl`](investigation/evidence/slice-d-original-gateway-20261024.jsonl).
+The shared-stack live rehearsal attempted by this chat did not execute: automatic
+approval review rejected the command before startup, citing a development-write
+risk. No live rehearsal artifact was created and this chat left routing legacy.
+The newly assigned [I1 integration task](tasks/I1-integration-rehearsal.md) owns
+subsequent combined verification and shared-stack changes; prepared test results
+are not a claim that live cutover or rollback has happened.
+
+**Wave 1 migration is still incomplete.** Slice D
 must demonstrate actual mixed routing, legacy HTTP-write visibility, ingress
 parity, and config-only rollback. Slice E must complete the acceptance matrix
 and submission evidence. No production route, table schema, or legacy write/job

@@ -32,3 +32,14 @@ class CrewService:
             return self._repository.get_for_org(session, org_id, crew_id)
         finally:
             session.close()
+
+    def get_for_org_raw_id(self, org_id: int, crew_id: str) -> CrewRecord | None:
+        """Run the legacy wrapper lookup and reset a failed DB transaction."""
+        session = self._session_factory()
+        try:
+            return self._repository.get_for_org_raw_id(session, org_id, crew_id)
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()

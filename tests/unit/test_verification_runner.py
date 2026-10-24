@@ -54,8 +54,30 @@ def test_topology_does_not_publish_ports_or_mount_dev_database():
     assert not any(service.get("ports") for service in services.values())
     assert services["db"]["tmpfs"] == ["/var/lib/postgresql/data"]
     assert all(".venv" not in str(service.get("volumes", [])) for service in services.values())
-    routes = yaml.safe_load((ROOT / "tests/routes.yaml").read_text())
-    assert routes["routes"]["/callboard/crew/"]["default"] == "encore"
+    assert services["gateway"]["environment"]["ROUTES_FILE"] == "/srv/routes/routes.yaml"
+    assert "route_state:/srv/routes:ro" in services["gateway"]["volumes"]
+    assert "route_state:/routes" in services["tests"]["volumes"]
+
+
+def test_mixed_route_fixture_only_migrates_org7_crew_reads():
+    routes = yaml.safe_load((ROOT / "tests/routes/mixed-org7.yaml").read_text())["routes"]
+
+    assert routes["/callboard/"] == {"default": "callboard"}
+    assert routes["/callboard/crew/list"] == {
+        "default": "callboard", "orgs": {"7": "encore"},
+    }
+    assert routes["/callboard/crew/show"] == {
+        "default": "callboard", "orgs": {"7": "encore"},
+    }
+    assert set(routes) == {"/callboard/", "/callboard/crew/list", "/callboard/crew/show"}
+
+
+def test_development_gateway_uses_read_only_route_directory():
+    services = yaml.safe_load((ROOT / "docker-compose.yml").read_text())["services"]
+    gateway = services["gateway"]
+
+    assert gateway["environment"]["ROUTES_FILE"] == "/srv/routes/routes.yaml"
+    assert "./proxy:/srv/routes:ro" in gateway["volumes"]
 
 
 @pytest.mark.parametrize("statuses,expected", [((0, 0), 0), ((7, 0), 7), ((0, 8), 8), ((7, 8), 7)])

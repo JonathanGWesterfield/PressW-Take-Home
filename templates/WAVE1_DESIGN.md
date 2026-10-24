@@ -1,9 +1,12 @@
 # Wave 1: crew reads, compatibility, and migration
 
-Status: implementation design with partial working-tree implementation, 2026-10-24.
-Repository/service and modern v3 reads now exist; legacy compatibility and
-customer cutover remain incomplete. Proposed steps below are acceptance work,
-not claims that they have passed.
+Status: implementation design and progress snapshot, 2026-10-24.
+Slice B (shared retrieval and modern v3 reads) is committed as `69438b9`.
+Slice C's legacy adapter is implemented; its validation
+is recorded in the root [seam map](../SEAMS.md) and
+[reference manifest](../investigation/evidence/wave1-reference-manifest.jsonl).
+Customer cutover and final wave acceptance remain pending slices D/E. Proposed
+steps below are acceptance requirements, not claims that every gate has passed.
 
 ## 1. Goal and boundary
 
@@ -26,11 +29,12 @@ and reverse engineering.
 
 ## 2. Current evidence and gaps
 
-The [brief](../README.md), [submission seam map](SEAMS.md), and
+The [brief](../README.md), [submission seam map](../SEAMS.md), and
 [crew behavior notes](../investigation/LEGACY_CREW_BEHAVIOR.md) establish the
-scope and contracts. The current working tree registers modern crew routes from
+scope and contracts. Encore registers modern crew routes from
 `encore/app/main.py` alongside `/healthz`, backed by crew models, repository, and
-service modules. The proposed `legacy.py` adapter does not exist yet. See
+service modules. It also registers the `legacy.py` compatibility
+adapter over the same service. See
 [trade-offs](TRADEOFFS.md) for saved test results and outstanding acceptance gaps.
 `proxy/app.py` rereads its route file per request, chooses the longest path
 prefix, and matches org overrides using the **exact header string**.
@@ -43,15 +47,18 @@ database are disposable. Do not freeze a test count here because another
 investigation may append cases. At implementation time record the corpus revision
 and checksum alongside each run.
 
-Two gaps matter before cutover:
+Slice D addresses the following original gaps:
 
-- `tests/routes.yaml` sends the whole crew prefix, for every org, to Encore. That
-  intentionally exercises fixture orgs but does not establish safe org-7 routing.
+- The old `tests/routes.yaml` sent the whole crew prefix, for every org, to Encore.
+  It has been replaced with explicit all-legacy and two-prefix/org-7 fixtures in
+  `tests/routes/`, with an isolated shared route directory for atomic publication.
 - Direct and gateway contracts differ today. The
   [gateway evidence](../investigation/evidence/gateway-boundary.jsonl) shows
   direct HEAD/OPTIONS responses differ from gateway 405 responses. The gateway
   replaces Host with its upstream destination, affecting absolute redirect URLs
   and HTML. Its trace and served-by headers also require explicit assertions.
+  The additional original-gateway capture is retained with source provenance in
+  [`slice-d-original-gateway-20261024.jsonl`](../investigation/evidence/slice-d-original-gateway-20261024.jsonl).
 
 ## 3. Request flow and code structure
 
@@ -68,8 +75,8 @@ flowchart LR
     C --> D
 ```
 
-Modules under `encore/app/crew/` (repository/service/v3 now present in the
-working tree; legacy remains proposed):
+Modules under `encore/app/crew/` (repository/service/v3 committed in slice B;
+legacy implemented in slice C):
 
 | Module | Responsibility |
 | --- | --- |
@@ -140,6 +147,13 @@ behavior explicitly; leave direct Encore's supplied Host and v3 forwarding
 unchanged. Do not broadly rewrite response bodies or excuse differences by
 updating the oracle.
 
+Slice D finding: neither exact migrated prefix selects an observed redirect;
+double-slash redirects remain Callboard-served and selected suffixes return 404
+failure bodies. Therefore the conditional Host adjustment above is unnecessary
+for this rollout and is not implemented. Tests retain the existing forwarding
+behavior, including first-header route selection, last-header forwarding, and
+query normalization at ingress.
+
 ## 5. Proposed modern contract
 
 The modern API intentionally differs from the wrapper. Document these choices
@@ -188,19 +202,20 @@ Current commands, from the repo root:
 ```sh
 python3 scripts/verify --backend legacy
 python3 scripts/verify --backend encore
+python3 scripts/verify --backend both
 python3 scripts/verify --backend gateway
 ```
 
-These are implemented entry points; Encore has partial modern read implementation
-but still lacks wrappers, and the
-gateway mode applies the direct corpus to a different boundary. Slice D must
-make gateway verification boundary-aware: keep direct golden comparisons
-unchanged and compare gateway responses against independently observed ingress
-expectations. Exclude volatile transport fields, compare Allow as a method set,
-control trace input, and require the intended served-by value. A redirected or
-fallback request must not masquerade as an Encore success. Add a committed mixed
-route fixture and isolated test scenario to this runner; its invocation/interface
-is implementation work, not an existing command claimed by this design.
+These are implemented entry points. The direct targets retain the unchanged
+golden comparisons. Gateway mode runs unit, ingress/mixed-routing, smoke, and
+direct-modern tests at its separate boundary. It captures fresh Callboard ingress
+responses before cutover and compares the same requests after atomic publication
+of `tests/routes/mixed-org7.yaml`, using `tests/routes/legacy.yaml` for baseline
+and rollback. Original ingress observations pin the gateway-specific quirks.
+Comparisons exclude volatile transport fields, compare Allow as a method set,
+control trace input, and require the intended served-by value. Gateway-generated
+HEAD/OPTIONS 405 responses retain their absence of upstream markers. A redirected
+or fallback request must not masquerade as an Encore success.
 
 In the isolated stack, exercise org 7 reads through the gateway; keep other orgs,
 crew/update, scheduling, and messaging on Callboard. Safely update an owned crew
@@ -211,11 +226,11 @@ scenarios/backends. Assert crew globally and other tables for owned test orgs
 are unchanged by reads; unrelated maintenance may legitimately change seeded
 scheduling data. Do not claim globally quiescent state.
 
-CI currently runs only the legacy command automatically. Add separately named
-legacy, Encore, gateway-ingress/mixed, and
-modern checks after they pass; require them for PRs targeting main. Workflow YAML
-alone is insufficient: configure GitHub branch protection/rulesets to require
-checks and PRs. A reduced pytest selection is investigation, not release evidence.
+The E1 workflow defines separately named legacy, Encore, and gateway-ingress/mixed
+checks, each retaining modern tests. Remote execution and required-check
+enforcement remain distinct acceptance work. Workflow YAML alone is insufficient:
+configure GitHub branch protection/rulesets to require checks and PRs. A reduced
+pytest selection is investigation, not release evidence.
 
 ## 7. Migration and rollback runbook
 
@@ -229,8 +244,9 @@ checks and PRs. A reduced pytest selection is investigation, not release evidenc
    in the isolated stack. Include canonical and padded org headers, duplicate
    headers, encoded paths, suffixes, methods, redirects, and cross-org IDs.
 3. **Cut over:** apply this proposed target YAML to `proxy/routes.yaml`, preserving
-   reviewed unrelated rules. The `/v3/crew` rule is optional if modern clients use
-   Encore directly. The gateway reads the file on the next request.
+   reviewed unrelated rules. This tested rollout keeps modern clients on Encore
+   directly (port 8092); it does not add a gateway `/v3` route. The gateway reads
+   the file on the next request.
 
 ```yaml
 routes:
@@ -244,8 +260,6 @@ routes:
     default: callboard
     orgs:
       "7": encore
-  "/v3/crew":
-    default: encore
 ```
 
 4. **Verify:** canonical `X-Org-Id: 7` crew reads report `X-Served-By: encore`;
@@ -256,8 +270,8 @@ routes:
 5. **Rollback on drift:** change the two `"7": encore` values to
    `"7": callboard`, leaving their legacy defaults intact. Validate YAML, save,
    and repeat routing and response checks without restarting anything. Keep the
-   legacy rollback independent of the optional `/v3/crew` route: Callboard cannot
-   serve v3. A modern API outage needs its own fix or client suspension.
+   legacy rollback independent of the direct modern API: Callboard cannot serve
+   v3. A modern API outage needs its own fix or client suspension.
 
 Rules are prefixes, not method/exact-path rules. Thus `list/extra` routes to Encore
 for org 7 and must return the compatible error; crew/update stays legacy. Exact

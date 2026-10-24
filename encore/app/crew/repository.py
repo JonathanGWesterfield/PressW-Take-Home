@@ -57,6 +57,28 @@ class CrewRepository:
         row = result.mappings().first()
         return self._record(row) if row is not None else None
 
+    def get_for_org_raw_id(
+        self, session: Session, org_id: int, crew_id: str
+    ) -> CrewRecord | None:
+        """Use Callboard's database-side integer conversion for its wrapper.
+
+        The compatibility adapter deliberately binds the unparsed text.  This
+        preserves PostgreSQL's historical parsing and error behavior while the
+        tenant predicate keeps every successful lookup scoped to its owner.
+        """
+        result = session.execute(
+            text(
+                f"""
+                SELECT {_SAFE_COLUMNS}
+                FROM tg_crew
+                WHERE id = CAST(:crew_id AS integer) AND org = :org_id
+                """
+            ),
+            {"crew_id": crew_id, "org_id": org_id},
+        )
+        row = result.mappings().first()
+        return self._record(row) if row is not None else None
+
     @staticmethod
     def _record(row: dict[str, object]) -> CrewRecord:
         return CrewRecord(

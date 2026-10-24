@@ -30,12 +30,39 @@ def wait_ready(timeout=60):
     raise RuntimeError(f"Database/HTTP readiness timed out after {timeout}s: {last}")
 
 
+def pytest_command(extra_args: list[str]) -> list[str]:
+    """Name the test root so its conftest registers runner-specific options."""
+    tests = ["tests"]
+    if os.environ["SHOWCALL_BACKEND"] == "gateway":
+        # Gateway ingress has an independently observed oracle.  The frozen
+        # direct-backend corpus still runs in the legacy/Encore matrix.
+        tests = [
+            "tests/unit",
+            "tests/e2e/test_gateway_ingress.py",
+            "tests/e2e/test_smoke.py",
+            "tests/e2e/test_v3_crew_e2e.py",
+        ]
+    return [
+        sys.executable,
+        "-m",
+        "pytest",
+        "--e2e",
+        "--run-writes",
+        "--backend",
+        os.environ["SHOWCALL_BACKEND"],
+        "--maxfail=1",
+        "--junitxml=/reports/junit.xml",
+        "-p",
+        "no:cacheprovider",
+        *tests,
+        *extra_args,
+    ]
+
+
 if __name__ == "__main__":
     try:
         wait_ready()
     except RuntimeError as exc:
         Path("/reports/readiness-error.txt").write_text(str(exc) + "\n")
         raise
-    command = [sys.executable, "-m", "pytest", "--e2e", "--run-writes", "--backend", os.environ["SHOWCALL_BACKEND"],
-               "--maxfail=1", "--junitxml=/reports/junit.xml", "-p", "no:cacheprovider", *sys.argv[1:]]
-    sys.exit(subprocess.call(command))
+    sys.exit(subprocess.call(pytest_command(sys.argv[1:])))

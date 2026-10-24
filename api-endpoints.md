@@ -85,6 +85,48 @@ list endpoint, `X-Org-Id` must be one positive ASCII decimal 32-bit value. HTTP
 422 responses use `{"detail":"..."}` and never expose database diagnostics.
 
 Trailing-slash forms return HTTP 404. Unsupported methods return the normal
-HTTP 405 response. These modern contracts intentionally differ from the
-legacy-compatible `/callboard/...` wrappers, which will be implemented in the
-next slice.
+HTTP 405 response.
+
+## Legacy compatibility reads
+
+`GET /callboard/crew/list` and `GET /callboard/crew/show` retain the existing
+Callboard client contract while migration routing remains unchanged. They use
+the same tenant-scoped current-read service as `/v3`, but intentionally preserve
+legacy differences: the `X-Org-Id` header accepts its observed loose integer
+forms, list paging uses `page` and `per_page` with first-value-wins semantics,
+and application errors are HTTP 200 compact JSON bodies with a trailing newline.
+`crew_id` on `show` is passed as bound text to PostgreSQL's integer cast, so its
+documented historical parser errors, signed forms, and range behavior remain
+visible. These are compatibility behavior, not guidance for new clients.
+
+List example:
+
+```http
+GET /callboard/crew/list?page=1&per_page=1
+X-Org-Id: 7
+```
+
+```json
+{"data":{"crew":[{"crew_id":2,"crew_name":"marta.kowalski@harborlight.example","display_name":"M. Kowalski","is_lead":"Y","notes":"head rigger, day calls preferred","org":7,"rate":"31.00"}],"page":1,"total":8},"result":"ok","tg_flash":null}
+```
+
+Detail example:
+
+```http
+GET /callboard/crew/show?crew_id=2
+X-Org-Id: 7
+```
+
+```json
+{"data":{"crew_id":2,"crew_name":"marta.kowalski@harborlight.example","display_name":"M. Kowalski","is_lead":"Y","notes":"head rigger, day calls preferred","org":7,"prefs":"{\"sms\": \"Y\", \"ui_rows\": 25, \"digest\": \"Y\"}","rate":"31.00"},"result":"ok","tg_flash":null}
+```
+
+The list omits `prefs`; detail returns the stored raw preference text. Null
+notes, preferences, and rates become empty strings, while a null display name
+stays JSON `null`. Only stored uppercase `Y` serializes as legacy `"Y"`.
+Unknown list query parameters are ignored, duplicate list/show parameters use
+their first value, duplicate organization headers fail, and foreign or absent
+records both return `{"error":"not found","result":"fail"}`. Trailing or
+suffix paths return the legacy 404 JSON failure body; wrong methods and OPTIONS
+keep the legacy dispatch behavior, including its validation precedence and
+direct 308 double-slash redirect HTML.

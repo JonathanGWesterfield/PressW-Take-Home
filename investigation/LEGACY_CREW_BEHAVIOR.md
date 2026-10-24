@@ -138,6 +138,31 @@ the unchanged original corpus. Org parsing therefore cannot simply reuse
 pagination's `int()` acceptance rules, and redirect construction must preserve
 both the Location value and its distinct HTML representation.
 
+## Gateway boundary follow-up (Slice D)
+
+The gateway has its own observable contract. Fourteen read-only requests to the
+original running gateway are retained in
+[`slice-d-original-gateway-20261024.jsonl`](evidence/slice-d-original-gateway-20261024.jsonl),
+including raw response headers/bodies, the running gateway's source hash,
+container identity, and a compared-DB invariance check. The source hash matches
+the pre-change gateway. Canonical bodies reflect earlier development-data writes;
+they are not pristine-seed expectations. Isolated cutover tests obtain Callboard
+baseline bodies in the same fresh database state used for Encore comparisons.
+
+| Ingress input | Original gateway behavior to preserve |
+| --- | --- |
+| HEAD or OPTIONS on crew reads | Gateway HTTP 405, with no upstream `X-Served-By` or `X-Trace-Id`; the request never reaches either backend. Direct legacy HEAD/OPTIONS behavior differs. |
+| Repeated org headers | Route selection sees the first value; the forwarded header dictionary retains the last. Thus headers `7,3` select the org-7 route after cutover but carry org 3 to that backend; `3,7` selects Callboard and carries org 7. Identical duplicates also collapse before forwarding, unlike direct legacy requests. |
+| Malformed percent query `%FF` | HTTPX forwarding normalizes it to the Unicode replacement character, unlike the direct legacy corpus's retained percent sequence. |
+| Encoded crew segment or separator | Gateway route selection uses the decoded path. Canonical org 7 therefore selects the migrated read prefix. |
+| Double-slash crew path | Does not match either migrated read prefix, stays Callboard, and retains HTTP 308 with `callboard:8080` in Location and redirect HTML. No Host rewrite is needed for the selected read routes. |
+| Padded org header `07` | Still reaches Callboard because gateway org matching uses the exact string, even though the legacy parser accepts it as org 7. |
+
+These inherited ambiguities are pinned behavior for this assessment, not a new
+tenant-authentication design. The direct backend corpus and ingress tests remain
+separate references; raw-header or query cleanup in the gateway would change
+the frontend's contract.
+
 ## What the fuzz run established, and its limits
 
 The final corpus contains 828 distinct fuzz requests. Each was sent twice during

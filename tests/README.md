@@ -6,7 +6,7 @@ Compose v2+, and Python 3 available. No local virtualenv or host ports are neede
 ```sh
 python3 scripts/verify                      # legacy baseline: full suite
 python3 scripts/verify --backend encore     # same frozen cases, new wrappers
-python3 scripts/verify --backend gateway    # same cases, dedicated migration routes
+python3 scripts/verify --backend gateway    # gateway ingress, mixed routing, rollback
 python3 scripts/verify --backend both       # same full suite: legacy, then Encore
 ```
 
@@ -36,7 +36,10 @@ Slice B adds modern crew repository/service and API unit tests plus live
 regardless of `--backend`; this includes the default legacy gate. They cover
 tenant scope, ordering, nulls/raw preferences, money formatting, validation,
 read-side DB invariance, and visibility of a committed table update on the next
-read. The legacy HTTP-write/mixed-routing check remains a later-slice gate.
+read. Slice C adds the original legacy crew read wrappers over that same service,
+plus focused compatibility parser/serializer and runner-discovery regressions.
+Slice D adds fresh all-legacy ingress comparisons, org-7 mixed routing, a legacy
+HTTP notes update followed by Encore reads, and atomic config-only rollback.
 
 The tests, fixtures, Compose topology, command and CI workflow live in this repo.
 Each invocation creates temporary **runtime resources** under a unique
@@ -71,15 +74,31 @@ recorded or rewritten during verification. Raw/malformed requests retain the
 existing stdlib transport so HTTPX cannot normalize away fuzz inputs. Existing
 standalone recording remains supported; see `characterization/README.md`.
 
-`--backend` changes the shared crew contract and property target; smoke tests
-still check all three running services. `gateway` mounts `tests/routes.yaml`,
-which sends **all crew orgs to Encore**, including the reserved fixture orgs.
-Production/development routing is untouched. Encore currently has no crew wrappers,
-so both `encore` and `gateway` contract runs are expected to **fail** until these
-are implemented. No unsupported cases are skipped and no Encore response is used
-as a new oracle. Gateway headers/protocol differences remain visible contract
-failures and must be deliberately addressed during migration. A green legacy
-baseline does not prove new-backend or gateway parity.
+For `legacy`/`encore`, `--backend` changes the shared direct crew contract and
+property target; smoke tests still check all three running services. The
+`gateway` target runs unit, gateway-ingress, smoke, and direct-modern tests. It
+uses the existing gateway boundary rather than applying the direct legacy oracle
+to it; direct frozen cases remain required in `both`.
+
+The isolated gateway mounts a dedicated route directory read-only, while the test
+publisher alone can write that directory. The ingress test validates YAML and
+atomically renames `tests/routes/legacy.yaml` and `mixed-org7.yaml` into place.
+It captures fresh Callboard responses before cutover in the same database state,
+then compares status, body, and relevant headers exactly, allowing only the
+intended served-by change. Trace input is fixed and Allow is compared as a set.
+Original gateway observations and source provenance are retained in
+`investigation/evidence/slice-d-original-gateway-20261024.jsonl`; its canonical
+bodies came from investigated development data and are not pristine-seed goldens.
+Gateway HEAD/OPTIONS remain 405 without upstream markers; duplicate org headers
+retain first-value routing and last-value forwarding; malformed percent queries
+retain the gateway's observed normalization. The observed double-slash redirects
+stay on Callboard. Modern clients use Encore directly on port 8092; the mixed
+fixture deliberately does not add a gateway `/v3` route.
+
+No unsupported cases are skipped and no Encore response is used as an oracle.
+Both read prefixes are scoped to canonical header `7`; padded headers, other orgs,
+crew writes, scheduling, and messages retain legacy routing. Gateway health adds
+an `instance_id` process token so cutover/rollback tests can detect a restart.
 
 Fixtures use reserved orgs/IDs with collision checks and fixed timestamps. They
 are installed and removed around suites, and committed HTTP/SQL effects are
@@ -159,7 +178,8 @@ was actually published; the live cutover/rollback rehearsal remains separate.
 .venv/bin/python -m pip install -r tests/requirements.txt
 .venv/bin/python -m pytest -m unit
 .venv/bin/python -m pytest --e2e -m smoke
-.venv/bin/python -m pytest --e2e --run-writes --backend legacy
+python3 scripts/verify --backend both
+python3 scripts/verify --backend gateway
 ```
 
 Ordinary pytest does not start/reset a stack. Live tests require `--e2e`; fixture
@@ -170,6 +190,8 @@ those URLs to the existing unittest adapter too. The standalone adapter still
 uses `docker compose exec db psql` unless `SHOWCALL_DATABASE_URL` explicitly
 selects a Postgres connection via psycopg. Its standalone `--base` remains valid.
 Never point write suites at a shared stack while another investigator is writing.
+The mixed-routing scenario requires the isolated shared route directory supplied
+by the runner; use `scripts/verify` for the full live/write suite.
 
 - `unit/`: isolated source/runner tests.
 - `e2e/`: HTTP smoke/property tests using pytest and HTTPX.

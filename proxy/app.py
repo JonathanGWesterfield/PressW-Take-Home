@@ -28,6 +28,7 @@ HOP_BY_HOP = {
 
 app = FastAPI(title="showcall-gateway")
 client = httpx.AsyncClient(timeout=30)
+GATEWAY_INSTANCE_ID = uuid.uuid4().hex
 
 
 def pick_backend(path: str, org: str | None) -> str:
@@ -50,7 +51,17 @@ def pick_backend(path: str, org: str | None) -> str:
 
 @app.get("/gateway/healthz")
 async def healthz():
-    return {"ok": True, "backends": BACKENDS}
+    return {"ok": True, "backends": BACKENDS, "instance_id": GATEWAY_INSTANCE_ID}
+
+
+def routing_org(request: Request) -> str | None:
+    """Retain the original first-value route selection behavior.
+
+    ``request.headers`` selects the first duplicate while the later forwarding
+    dictionary keeps the last one.  That ambiguity is established ingress
+    behavior and mixed-route tests pin it rather than silently normalizing it.
+    """
+    return request.headers.get("x-org-id")
 
 
 @app.api_route(
@@ -58,8 +69,9 @@ async def healthz():
     methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
 )
 async def forward(path: str, request: Request):
-    org = request.headers.get("x-org-id")
-    backend = pick_backend("/" + path, org)
+    route_path = "/" + path
+    org = routing_org(request)
+    backend = pick_backend(route_path, org)
     base = BACKENDS.get(backend)
     if base is None:
         return Response(f"unknown backend {backend!r}", status_code=502)

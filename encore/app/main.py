@@ -12,13 +12,25 @@ keep in mind from the brief:
   the difference.
 """
 from fastapi import FastAPI
+from fastapi import Request
 from sqlalchemy import text
+from starlette.concurrency import run_in_threadpool
 
 from . import db
+from .crew.legacy import dispatch as dispatch_legacy_crew
 from .crew.v3 import router as crew_v3_router
 
 app = FastAPI(title="encore")
 app.include_router(crew_v3_router)
+
+
+@app.middleware("http")
+async def legacy_crew_compatibility(request: Request, call_next):
+    """Answer only the frozen Callboard crew paths before FastAPI routing."""
+    response = await run_in_threadpool(dispatch_legacy_crew, request)
+    if response is not None:
+        return response
+    return await call_next(request)
 
 
 @app.get("/healthz")
