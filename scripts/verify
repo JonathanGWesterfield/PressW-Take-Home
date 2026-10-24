@@ -62,17 +62,39 @@ def run_verification(backend, pytest_args=(), *, runner=subprocess.run, report_r
     return status
 
 
+def run_targets(backends, pytest_args=(), *, verifier=run_verification):
+    """Reuse exactly one suite/options for each independently seeded backend run."""
+    results = []
+    for backend in backends:
+        status = verifier(backend, pytest_args)
+        results.append((backend, status))
+        if status == 130:
+            break
+    print("Verification results: " + ", ".join(
+        f"{backend}={'PASS' if status == 0 else f'FAIL (exit {status})'}"
+        for backend, status in results), flush=True)
+    if any(status == 130 for _, status in results):
+        return 130
+    return next((status for _, status in results if status), 0)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--backend", choices=("legacy", "encore", "gateway"), default="legacy")
+    parser.add_argument("--backend", choices=("legacy", "encore", "gateway", "both"), default="legacy",
+                        help="both runs the identical suite against legacy, then Encore, in separate fresh stacks")
     parser.add_argument("pytest_args", nargs=argparse.REMAINDER, help="Additional pytest arguments after --")
     args = parser.parse_args()
     extra = args.pytest_args[1:] if args.pytest_args[:1] == ["--"] else args.pytest_args
+    targets = ("legacy", "encore") if args.backend == "both" else (args.backend,)
+    if args.backend == "both":
+        # Compare all test results, even while the replacement is incomplete.
+        # Explicit options after -- can still select a smaller failure budget.
+        extra = ["--maxfail=0", *extra]
     def interrupted(signum, frame):
         raise KeyboardInterrupt
     signal.signal(signal.SIGTERM, interrupted)
     try:
-        return run_verification(args.backend, extra)
+        return run_targets(targets, extra)
     except KeyboardInterrupt:
         return 130
 

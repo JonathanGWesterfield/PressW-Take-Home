@@ -56,3 +56,49 @@ def test_topology_does_not_publish_ports_or_mount_dev_database():
     assert all(".venv" not in str(service.get("volumes", [])) for service in services.values())
     routes = yaml.safe_load((ROOT / "tests/routes.yaml").read_text())
     assert routes["routes"]["/callboard/crew/"]["default"] == "encore"
+
+
+@pytest.mark.parametrize("statuses,expected", [((0, 0), 0), ((7, 0), 7), ((0, 8), 8), ((7, 8), 7)])
+def test_both_targets_run_in_order_with_identical_test_arguments(statuses, expected):
+    calls = []
+    options = ["--maxfail=0", "-m", "characterization"]
+    def verifier(backend, pytest_args):
+        calls.append((backend, pytest_args))
+        return statuses[len(calls)-1]
+    assert verify.run_targets(("legacy", "encore"), options, verifier=verifier) == expected
+    assert calls == [("legacy", options), ("encore", options)]
+
+
+def test_both_targets_stop_after_interruption():
+    calls = []
+    def verifier(backend, pytest_args):
+        calls.append(backend)
+        return 130
+    assert verify.run_targets(("legacy", "encore"), verifier=verifier) == 130
+    assert calls == ["legacy"]
+
+
+def test_both_targets_use_different_owned_projects_and_databases(tmp_path):
+    runs = []
+    def runner(command, **kwargs):
+        if "run" in command:
+            runs.append((command[command.index("-p")+1], kwargs["env"]["SHOWCALL_BACKEND"]))
+        return subprocess.CompletedProcess(command, 0)
+    def verifier(backend, pytest_args):
+        return verify.run_verification(backend, pytest_args, runner=runner, report_root=tmp_path)
+    assert verify.run_targets(("legacy", "encore"), verifier=verifier) == 0
+    assert [backend for _, backend in runs] == ["legacy", "encore"]
+    assert runs[0][0] != runs[1][0]
+    assert len(list(tmp_path.glob("*/exit-code.txt"))) == 2
+
+
+def test_both_cli_runs_the_complete_identical_suite(monkeypatch):
+    calls = []
+    monkeypatch.setattr(verify.sys, "argv", ["verify", "--backend", "both", "--", "-m", "characterization"])
+    monkeypatch.setattr(verify.signal, "signal", lambda *args: None)
+    def run_targets(backends, pytest_args):
+        calls.append((backends, pytest_args))
+        return 9
+    monkeypatch.setattr(verify, "run_targets", run_targets)
+    assert verify.main() == 9
+    assert calls == [(("legacy", "encore"), ["--maxfail=0", "-m", "characterization"])]

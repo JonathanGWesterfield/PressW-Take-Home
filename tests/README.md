@@ -7,7 +7,25 @@ Compose v2+, and Python 3 available. No local virtualenv or host ports are neede
 python3 scripts/verify                      # legacy baseline: full suite
 python3 scripts/verify --backend encore     # same frozen cases, new wrappers
 python3 scripts/verify --backend gateway    # same cases, dedicated migration routes
+python3 scripts/verify --backend both       # same full suite: legacy, then Encore
 ```
+
+`both` runs sequentially, with a separate fresh database/Compose project and report
+directory for each backend. The test code, fixture data, frozen expectations and
+pytest options are identical; only the selected backend URL changes. Both runs
+are attempted even if the first has test failures, and the command succeeds only
+if both pass. Interruption stops further runs after cleanup. Sequential execution
+avoids fixture interference and competing stack resource use.
+
+In `both` mode all cases run by default (`--maxfail=0`), so partial implementations
+produce a complete failure report. Override after `--` for focused investigation.
+The default single-backend command remains `legacy`, including the current CI
+gate; manual CI runs can select `both`. Encore currently lacks crew wrappers, so
+`both` should report legacy PASS and Encore FAIL until implementation is complete.
+
+These shared assertions test the original `/callboard/crew/list` and `/show`
+paths on either backend. The modern `/v3` API has its own intentional contract;
+it must not replace the frozen legacy expectations.
 
 The tests, fixtures, Compose topology, command and CI workflow live in this repo.
 Each invocation creates temporary **runtime resources** under a unique

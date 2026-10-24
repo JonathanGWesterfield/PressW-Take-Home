@@ -125,6 +125,9 @@ python3 tests/characterization/test_crew_contract.py --base http://localhost:809
 The repository-owned isolated equivalent is `python3 scripts/verify --backend
 encore` (or `legacy` / `gateway`). It uses the same golden files, a fresh database,
 and the environment-configurable HTTP/Postgres adapter; see `../README.md`.
+Use `python3 scripts/verify --backend both` to run the identical full suite against
+legacy and then Encore, with a separate fresh database/report for each. Both runs
+execute all cases by default and neither records replacement expectations.
 
 That parity run is expected to fail until wrappers are implemented. Passing this
 legacy run establishes a repeatable reference; it does not yet establish Encore
