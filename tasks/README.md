@@ -12,6 +12,7 @@ Initial snapshot: 2026-10-24, HEAD `b557934`, with implementation actively chang
 | [D2: rollout configuration](D2-rollout-configuration.md) | Prepared and independently reviewed; bounded checks pass | I1 live mount, cutover and rollback rehearsal pending | Reviewed directory mount, stable route fixtures and atomic publication runbook |
 | [E1: verification gate](E1-verification-gate.md) | Implemented and independently reviewed; local checks pass | I1 combined runs and GitHub execution remain unverified | Three named CI checks covering direct backends, modern API and ingress |
 | [E2: submission documents](E2-submission-documents.md) | Reconciled with saved I1 evidence; independently reviewed | R1 verdict and interview timing remain distinct | Accurate scoping, tradeoffs, seams, rollout/recovery evidence and limitations |
+| [E3: design reconciliation](E3-design-reconciliation.md) | Complete and independently reviewed | R1 integrated verdict remains separate | Design aligned with delivered code, CI and corrected I1 publication evidence |
 | [I1: integration and live rehearsal](I1-integration-rehearsal.md) | Complete and independently reviewed; full matrix and live rehearsal pass | R1 whole-system review and E2 final documents remain | Org-7 cutover, config-only rollback, final mixed routing and recorded evidence |
 | [R1: independent review](R1-independent-review.md) | Final combined review pending | I1; review E2 draft alongside final evidence | Findings, correction loop and final verdict |
 
