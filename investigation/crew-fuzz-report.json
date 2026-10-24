@@ -1,0 +1,44 @@
+{
+  "captured_at": "2026-10-24T16:58:21.854291+00:00",
+  "seed": 20261024,
+  "cases": 828,
+  "repeated_requests": 828,
+  "unique_responses": 147,
+  "http_statuses": {
+    "200": 826,
+    "308": 2
+  },
+  "outcomes": {
+    "ok": 196,
+    "fail": 555,
+    "non-json": 2,
+    "empty-body": 75
+  },
+  "categories": {
+    "value-boundary-page": 42,
+    "value-boundary-per_page": 42,
+    "value-boundary-crew_id": 42,
+    "org-header": 18,
+    "duplicate-org-header": 8,
+    "unusual-method": 4,
+    "get-body": 6,
+    "response-negotiation": 8,
+    "raw-query": 30,
+    "raw-path": 14,
+    "error-precedence": 6,
+    "seeded-random-list": 293,
+    "seeded-random-show": 307,
+    "valid-id-format-followup": 6,
+    "pagination-error-precedence": 2
+  },
+  "db_checks": "Every 25 requests and after each full pass; crew globally, all six tables for fixture orgs",
+  "original_contract_sha256": "33b5e10b5a818e3cf472814cf477fdf9d0b87fb00bc0bd9e938a34d04cb54056",
+  "elapsed_seconds": 9.708,
+  "regression_validation": {
+    "command": "python3 -m unittest discover -s tests/characterization -v",
+    "tests": 1001,
+    "elapsed_seconds": 109.798,
+    "result": "PASS",
+    "original_baseline_unchanged": true
+  }
+}
