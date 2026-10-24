@@ -19,9 +19,13 @@ avoids fixture interference and competing stack resource use.
 
 In `both` mode all cases run by default (`--maxfail=0`), so partial implementations
 produce a complete failure report. Override after `--` for focused investigation.
-The default single-backend command remains `legacy`, including the current CI
-gate; manual CI runs can select `both`. Encore currently lacks crew wrappers, so
-`both` should report legacy PASS and Encore FAIL until implementation is complete.
+The default single-backend command remains `legacy`. Automatic CI runs all three
+backends as separate checks; manual CI runs can select any target, including
+`both`. Encore now implements the read wrappers,
+so `both` is the direct-backend parity gate. The suite also includes the shared
+gateway scenario; use the separately named `gateway` target for ingress and
+mixed-routing acceptance. An isolated gate alone does not establish that the
+development route file has actually been published.
 
 These shared assertions test the original `/callboard/crew/list` and `/show`
 paths on either backend. The modern `/v3` API has its own intentional contract;
@@ -113,16 +117,41 @@ Do not use reduced selections as evidence that the full gate passed.
 
 ## Before main
 
-`.github/workflows/verify.yml` runs the same default legacy command on pull
-requests targeting main and main pushes, always uploading reports/logs. Manual
-workflow runs accept any of the three targets. Configure a GitHub branch ruleset
-for main to require the **Repository verification** check and PRs, disallowing
-bypasses/direct pushes as appropriate. Workflow YAML alone does not protect main;
-this task does not change remote rules. Before migration cutover, also require
-successful Encore and migrated-gateway contract runs (add those targets to the
-required CI jobs once wrappers exist). Until then the default gate validates the
-test infrastructure, legacy baseline, and modern crew reads; it does not prove
-Encore wrapper or gateway cutover parity.
+`.github/workflows/verify.yml` automatically runs these independent checks for
+pull requests targeting `main` and pushes to `main`:
+
+| Required status check | Full command | Acceptance boundary |
+| --- | --- | --- |
+| **Direct legacy and modern** | `python3 scripts/verify --backend legacy` | Frozen direct Callboard corpus, properties, unit, smoke, ingress, and modern v3 checks. |
+| **Direct Encore and modern** | `python3 scripts/verify --backend encore` | Same frozen direct corpus against Encore, with modern v3 checks retained. |
+| **Gateway ingress and mixed routing** | `python3 scripts/verify --backend gateway` | Explicit unit, ingress/mixed/write-visibility/rollback, smoke and direct-modern suites. |
+
+The gateway target explicitly selects `tests/e2e/test_gateway_ingress.py` and
+`tests/e2e/test_v3_crew_e2e.py`, plus unit and smoke tests in
+`tests/run_stack.py`; it does not substitute the frozen direct corpus as an ingress
+oracle. Its assertions require the intended served-by backend, so a fallback to
+Callboard cannot count as successful org-7 migration. Modern acceptance is part
+of every automatic job rather than an additional reduced-only check.
+
+The matrix uses `fail-fast: false`: failure in one backend does not cancel the
+others. Each verification command directly determines its job status, with no
+failure suppression. The always-run upload step retains `test-results/`, including
+JUnit when pytest starts, logs, identity/exit codes and readiness diagnostics.
+Artifact names include backend, run ID and attempt so matrix jobs and reruns do
+not collide. Failure before reports exist produces an upload warning; forced
+runner termination can prevent cleanup or upload. Each automatic job has a
+30-minute bound. Manual workflow dispatch keeps the backend selector, including
+sequential `both`, with a 60-minute bound; a manual selection is not evidence that
+all automatic checks passed.
+
+Configure a GitHub branch ruleset for `main` requiring PRs and all three exact
+status check names above, disallowing bypasses/direct pushes as appropriate.
+Workflow execution and branch enforcement are separate: **this task does not
+change or verify remote branch protection**. The workflow has not been executed
+on GitHub as part of this local edit. I1 must still run the full commands against
+the combined implementation and record fresh evidence before final acceptance.
+An isolated green matrix also does not establish that the development route file
+was actually published; the live cutover/rollback rehearsal remains separate.
 
 ## Local pytest and the existing investigation stack
 
