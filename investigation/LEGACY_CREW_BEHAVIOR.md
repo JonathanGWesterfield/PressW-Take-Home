@@ -3,7 +3,9 @@
 Scope: `GET /callboard/crew/list` and `GET /callboard/crew/show`, plus their
 observable method/routing behavior. These findings describe the supplied
 Callboard image `r129e453a77` and Postgres 16 in this assessment. They were
-recorded **before implementing alternate endpoints**. Unexpected behavior is an
+recorded **before implementing alternate endpoints**. The separately labeled
+Slice C follow-up below adds later public-HTTP observations without changing
+those frozen responses. Unexpected behavior is an
 expected result for the legacy wrappers, not a request to fix Callboard.
 
 ## Evidence and reproduction
@@ -114,6 +116,27 @@ earlier exploratory writes to seeded customers.
 | OPTIONS | Empty HTML body, length 0, allows GET/HEAD/OPTIONS. | Original `*_method_OPTIONS`; randomized OPTIONS requests |
 | GET with form, malformed JSON, or text body | Tested bodies do not replace query/header inputs or trigger JSON parsing errors. | F:0141–0143, 0188–0190 |
 | XML/HTML Accept, gzip preference, conditional ETag, Range | The tested requests still return the ordinary complete JSON response; no observed XML conversion, compression, 304, or partial content. | Original `*_accept_html`; F:0144–0147, 0191–0194 |
+
+## Slice C follow-up observations (2026-10-24)
+
+These four additional requests were sent directly to Callboard while reviewing
+the new compatibility adapter. Their request specifications, compared headers,
+and full response bodies are retained in
+[`slice-c-targeted-legacy-probes-20261024.jsonl`](evidence/slice-c-targeted-legacy-probes-20261024.jsonl).
+They are new source observations, not Encore-generated expectations or edits to
+the original frozen corpora.
+
+| Input | Observed legacy response | Evidence case |
+| --- | --- | --- |
+| Org header `9_00071` | HTTP 200 `missing org`, despite Python `int()` accepting underscores for pagination. | `org_underscore` |
+| Org header `-0` | HTTP 200 `missing org`; unsigned `0` remains an accepted empty tenant. | `org_negative_zero` |
+| Latin-1 superscript org header `³` | HTTP 200 with Python's `invalid literal for int() with base 10: '³'` error, extending the previously recorded `²` case. | `org_superscript_three` |
+| Double-slash detail path with multiple query parameters and percent-encoded quote/angle-bracket text | HTTP 308; Location retains the raw query's `&`, while both occurrences of the URL in redirect HTML escape it as `&amp;`. Percent-encoded text stays encoded. | `redirect_quoted` |
+
+Focused compatibility regression tests cover these discoveries separately from
+the unchanged original corpus. Org parsing therefore cannot simply reuse
+pagination's `int()` acceptance rules, and redirect construction must preserve
+both the Location value and its distinct HTML representation.
 
 ## What the fuzz run established, and its limits
 
