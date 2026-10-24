@@ -1,0 +1,17 @@
+.git
+.idea
+.venv
+.env
+.env.*
+**/.env
+**/.env.*
+.codex
+.agents
+.aws
+**/__pycache__
+.pytest_cache
+.hypothesis
+test-results
+investigation/*
+!investigation/crew_support.py
+*.log

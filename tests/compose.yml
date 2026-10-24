@@ -1,0 +1,55 @@
+# Standalone test topology: no dev ports, source mounts, or database volumes.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: showcall
+      POSTGRES_PASSWORD: showcall
+      POSTGRES_DB: showcall
+    tmpfs:
+      - /var/lib/postgresql/data
+    volumes:
+      - ../db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U showcall -d showcall"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  callboard:
+    image: ghcr.io/pressw-llc/showcall-callboard:r129e453a77
+    environment:
+      DATABASE_URL: postgresql://showcall:showcall@db:5432/showcall
+    depends_on:
+      db:
+        condition: service_healthy
+  encore:
+    build: ../encore
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://showcall:showcall@db:5432/showcall
+    depends_on:
+      db:
+        condition: service_healthy
+  gateway:
+    build: ../proxy
+    environment:
+      CALLBOARD_URL: http://callboard:8080
+      ENCORE_URL: http://encore:8080
+      ROUTES_FILE: /srv/test-routes.yaml
+    volumes:
+      - ./routes.yaml:/srv/test-routes.yaml:ro
+    depends_on: [callboard, encore]
+  tests:
+    build:
+      context: ..
+      dockerfile: tests/Dockerfile
+    environment:
+      LEGACY_URL: http://callboard:8080
+      ENCORE_URL: http://encore:8080
+      GATEWAY_URL: http://gateway:8080
+      SHOWCALL_BACKEND: ${SHOWCALL_BACKEND:-legacy}
+      SHOWCALL_DATABASE_URL: postgresql://showcall:showcall@db:5432/showcall
+      SHOWCALL_FUZZ_EXAMPLES: ${SHOWCALL_FUZZ_EXAMPLES:-30}
+      PYTHONDONTWRITEBYTECODE: "1"
+    volumes:
+      - ${SHOWCALL_REPORT_DIR:?Set by scripts/verify}:/reports

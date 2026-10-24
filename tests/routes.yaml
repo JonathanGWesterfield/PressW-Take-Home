@@ -1,0 +1,6 @@
+# Verification deliberately sends ALL wave-1 crew orgs to Encore, including
+# reserved fixture orgs. A gateway pass must never mean fallback to legacy.
+routes:
+  /callboard/crew/:
+    default: encore
+    orgs: {}

@@ -1,0 +1,28 @@
+name: Verify
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      backend:
+        type: choice
+        options: [legacy, encore, gateway]
+        default: legacy
+jobs:
+  verification:
+    name: Repository verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify isolated stack
+        run: python3 scripts/verify --backend "${{ inputs.backend || 'legacy' }}"
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-evidence
+          path: test-results/
+          if-no-files-found: warn

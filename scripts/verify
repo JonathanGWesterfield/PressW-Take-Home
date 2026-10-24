@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+"""Start an isolated stack, run pytest, save evidence, and remove owned resources."""
+import argparse
+from datetime import datetime, timezone
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import uuid
+
+ROOT = Path(__file__).resolve().parents[1]
+SERVICES = ("db", "callboard", "encore", "gateway")
+
+
+def run_verification(backend, pytest_args=(), *, runner=subprocess.run, report_root=None):
+    project = "showcall-verify-" + uuid.uuid4().hex[:12]
+    report = (report_root or ROOT / "test-results") / project
+    report.mkdir(parents=True)
+    env = dict(os.environ, SHOWCALL_BACKEND=backend, SHOWCALL_REPORT_DIR=str(report.resolve()))
+    compose = ["docker", "compose", "-f", str(ROOT / "tests/compose.yml"), "-p", project]
+    (report / "run.txt").write_text(f"project={project}\nbackend={backend}\nstarted={datetime.now(timezone.utc).isoformat()}\n")
+    print(f"Backend: {backend}; reports: {report}", flush=True)
+    status = 1
+
+    def execute(args, **kwargs):
+        return runner(compose + args, cwd=ROOT, env=env, **kwargs)
+
+    try:
+        execute(["config", "--quiet"], check=True, timeout=30)
+        execute(["build", "tests", "encore", "gateway"], check=True, timeout=600)
+        execute(["up", "-d", "--wait", "--wait-timeout", "90", *SERVICES], check=True, timeout=120)
+        result = execute(["run", "--rm", "-T", "--no-deps", "tests", "python", "tests/run_stack.py", *pytest_args], timeout=900)
+        status = result.returncode
+    except subprocess.CalledProcessError as exc:
+        status = exc.returncode or 1
+    except subprocess.TimeoutExpired as exc:
+        print(f"Verification command timed out: {exc.cmd}", file=sys.stderr)
+        status = 124
+    except OSError as exc:
+        print(f"Cannot run verification: {exc}", file=sys.stderr)
+        status = 1
+    except KeyboardInterrupt:
+        status = 130
+    finally:
+        # Every command is scoped to the generated project and explicit file.
+        # Never invoke the default development Compose project.
+        try:
+            with (report / "compose.log").open("w") as log:
+                execute(["logs", "--no-color", "--timestamps", *SERVICES], stdout=log, stderr=subprocess.STDOUT, timeout=30)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            print(f"Log collection failed: {exc}", file=sys.stderr)
+        try:
+            cleanup = execute(["down", "--volumes", "--remove-orphans", "--timeout", "10"], timeout=60)
+            if cleanup.returncode and status == 0:
+                status = cleanup.returncode
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            print(f"Cleanup failed; remove owned project {project}: {exc}", file=sys.stderr)
+            if status == 0:
+                status = 1
+        (report / "exit-code.txt").write_text(f"{status}\n")
+    return status
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backend", choices=("legacy", "encore", "gateway"), default="legacy")
+    parser.add_argument("pytest_args", nargs=argparse.REMAINDER, help="Additional pytest arguments after --")
+    args = parser.parse_args()
+    extra = args.pytest_args[1:] if args.pytest_args[:1] == ["--"] else args.pytest_args
+    def interrupted(signum, frame):
+        raise KeyboardInterrupt
+    signal.signal(signal.SIGTERM, interrupted)
+    try:
+        return run_verification(args.backend, extra)
+    except KeyboardInterrupt:
+        return 130
+
+
+if __name__ == "__main__":
+    sys.exit(main())
