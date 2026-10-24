@@ -27,6 +27,13 @@ These shared assertions test the original `/callboard/crew/list` and `/show`
 paths on either backend. The modern `/v3` API has its own intentional contract;
 it must not replace the frozen legacy expectations.
 
+Slice B adds modern crew repository/service and API unit tests plus live
+`/v3/crew` list/detail tests. Modern HTTP tests always use the Encore URL,
+regardless of `--backend`; this includes the default legacy gate. They cover
+tenant scope, ordering, nulls/raw preferences, money formatting, validation,
+read-side DB invariance, and visibility of a committed table update on the next
+read. The legacy HTTP-write/mixed-routing check remains a later-slice gate.
+
 The tests, fixtures, Compose topology, command and CI workflow live in this repo.
 Each invocation creates temporary **runtime resources** under a unique
 `showcall-verify-*` Compose project: its own network, services, and fresh seeded
@@ -113,8 +120,9 @@ for main to require the **Repository verification** check and PRs, disallowing
 bypasses/direct pushes as appropriate. Workflow YAML alone does not protect main;
 this task does not change remote rules. Before migration cutover, also require
 successful Encore and migrated-gateway contract runs (add those targets to the
-required CI jobs once wrappers exist). Until then CI validates the test
-infrastructure and legacy baseline only.
+required CI jobs once wrappers exist). Until then the default gate validates the
+test infrastructure, legacy baseline, and modern crew reads; it does not prove
+Encore wrapper or gateway cutover parity.
 
 ## Local pytest and the existing investigation stack
 

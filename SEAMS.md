@@ -178,6 +178,43 @@ Exit conditions before declaring wave 1 complete:
   writeups. Later-wave expiry/digest/concurrency questions do not need to be solved
   to move these reads, but remain blockers for transferring those write/job owners.
 
+## Wave 1 implementation progress: slices A and B
+
+The [design's implementation sequence](templates/WAVE1_DESIGN.md#6-implementation-slices-and-verification)
+has reached **B: shared reads and modern API**. Reference preservation (A) was
+rechecked before code changes: the full legacy gate passed 1,028 tests, and both
+frozen corpus hashes plus the fixture hash were recorded in
+[`wave1-reference-manifest.jsonl`](investigation/evidence/wave1-reference-manifest.jsonl).
+Those hashes remain unchanged after implementation.
+
+Encore now provides `GET /v3/crew` and `GET /v3/crew/{crew_id}` through one shared
+repository/service. Queries select only approved crew columns, bind tenant scope
+in the database predicate, and close a fresh session after each retrieval. List
+pagination and totals use the same ordered query result. The modern adapter
+preserves nulls/raw preferences and formats money as decimal strings; its strict
+validation and boolean lead field follow the intentional modern contract in
+[the endpoint documentation](api-endpoints.md) and OpenAPI.
+
+The implementer and independent reviewer each ran the complete isolated
+`python3 scripts/verify --backend legacy` gate: **1,060 pytest tests passed** in
+each run. Modern HTTP tests target Encore directly regardless of the compatibility
+backend selector. Coverage includes tenant isolation, invalid/duplicate inputs,
+nulls, raw invalid preferences, ordering, read-side DB checks, and visibility of
+a committed table update on the next read. The reviewer also checked the code
+against the design, assessment README, and this seam map, and exercised padded
+IDs/orgs, malformed queries/headers, very large pages, and common not-found
+responses against an isolated live stack. Final reports are local under
+`test-results/showcall-verify-197d1c04f25d/` (implementation) and
+`test-results/showcall-verify-d7d93063d69f/` (independent review); the manifest
+retains their identities and reference checksums.
+
+**Wave 1 migration is still incomplete.** Slice C must implement the original
+`/callboard/...` wrappers and pass the unchanged corpus against Encore. Slice D
+must demonstrate actual mixed routing, legacy HTTP-write visibility, ingress
+parity, and config-only rollback. Slice E must complete the acceptance matrix
+and submission evidence. No production route, table schema, or legacy write/job
+ownership changed in slice B.
+
 ## Cut couplings and mixed-routing mitigation
 
 - In wave 1, legacy remains the writer of `tg_crew` and owner of every background
